@@ -8,6 +8,9 @@ public class SpaceCraft : MonoBehaviour
     // determine a border for left/right movememnt for player to not exceed the screen limits
 
     public GameObject player;
+    public Camera mainCamera; // gameobject to represent camera
+    public Camera finishCamera; // this activates when the view needs to stop
+    private Vector3 cameraPos; // detects position of mainCamera to transform it to finishCamera
     
     //private int pD = 100; // pixel distance to detect the swipe action
     private Vector2 startPos; // first touch / mouse press
@@ -22,6 +25,8 @@ public class SpaceCraft : MonoBehaviour
     [HideInInspector] public float currentVelocity; // to check 
 
     Rigidbody2D p_RigidBody; // rigidbody of the player 
+
+    [HideInInspector] public bool isFinished; // to determine if the game is finished 
 
     void Start()
     {
@@ -85,17 +90,30 @@ public class SpaceCraft : MonoBehaviour
                 moveClock = 0.5f;
                 isLeft = true;
             }
-            else if (Input.touches[0].position.y - startPos.y >= -screenY / 1.75f) // force up if swipe is along half of the screen
+            else if (Input.touches[0].position.y - startPos.y >= -screenY / 1.75f && player.transform.position.y < 32f) // force up if swipe is along half of the screen
             {
                 moveClock = 1f;
                 isUp = true;
             }
-            else if (Input.touches[0].position.y - startPos.y >= -screenY / 6) // force up if swipe is along one sixth the screen
+            else if (Input.touches[0].position.y - startPos.y >= -screenY / 6 && player.transform.position.y < 32f) // force up if swipe is along one sixth the screen
             {
                 moveClock = 0.5f;
                 isUp = true;
             }
-            print(player.transform.position.x);
         }
+
+        if (player.transform.position.y > 32 && !isFinished) // Y: 32 is the maximum vertical distance for map
+        { // if spacecraft exceeds the border, switch the camera to stop the view
+
+            cameraPos = mainCamera.transform.position;
+            finishCamera.transform.position = cameraPos;
+            //print("f: " + finishCamera.transform.position.ToString());
+            
+
+            mainCamera.enabled = false;
+            finishCamera.enabled = true;
+            isFinished = true;
+        }
+
     }
 }
