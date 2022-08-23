@@ -39,6 +39,9 @@ public class SpaceCraft : MonoBehaviour
     
     void Update()
     {
+        
+
+
         if (isRight)
         {
             transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
@@ -64,11 +67,11 @@ public class SpaceCraft : MonoBehaviour
         }
 
         // can be tried on mobile and desktop mobile simulation
-        if (Input.touchCount > 0) // to handle index out of bound error
+        if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
             if (Input.GetTouch(0).phase == TouchPhase.Began)  startPos = Input.touches[0].position; 
 
         // if statements to adjust direction and flight time
-        if (Input.touchCount > 0 && !isRight && !isLeft && !isUp && Input.GetTouch(0).phase == TouchPhase.Ended) // to handle index out of bound error
+        if (Input.touchCount > 0 && !isRight && !isLeft && !isUp && Input.GetTouch(0).phase == TouchPhase.Ended && !isFinished)
         { // transform.position in the if statement is to limit the movement boundary of the player
             if (Input.touches[0].position.x - startPos.x >= screenX / 1.75f && player.transform.position.x < 1.75f) // go right statement
             {
@@ -109,11 +112,19 @@ public class SpaceCraft : MonoBehaviour
             finishCamera.transform.position = cameraPos;
             //print("f: " + finishCamera.transform.position.ToString());
             
-
             mainCamera.enabled = false;
             finishCamera.enabled = true;
             isFinished = true;
         }
 
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == "Obstacle")
+            {
+                isFinished = true;
+                player.SetActive(false);
+                print("zort");
+            }
+        }
     }
 }
