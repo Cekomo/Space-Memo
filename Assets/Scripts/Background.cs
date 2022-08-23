@@ -15,7 +15,7 @@ public class BackGround : MonoBehaviour
         //.. stars are far away and the movement should seem realistic
         transform.Translate(Vector2.up * (spaceCraft.currentVelocity * 0.7f) * Time.deltaTime);
 
-        // (0.3 * 5) to make it slightly less than spacecraft moving speed
+        // (0.3f * 5) to make it slightly less than spacecraft moving speed
         // should have a view like the spacecraft travels among stars 
         if (spaceCraft.isRight) // to move the background wrt spacecraft towards right
             transform.Translate(Vector2.right * bgSpeed * 5 * Time.deltaTime);
