@@ -12,7 +12,7 @@ public class BackGround : MonoBehaviour
     void Update()
     {
         // I would like to set the speed of background slightly less than spacecraft since..
-        //.. stars are far away and the movement should seem realistic
+        //..stars are far away and the movement should seem realistic
         transform.Translate(Vector2.up * (spaceCraft.currentVelocity * 0.7f) * Time.deltaTime);
 
         // (0.3f * 5) to make it slightly less than spacecraft moving speed
