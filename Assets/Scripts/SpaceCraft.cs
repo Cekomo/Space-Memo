@@ -25,8 +25,9 @@ public class SpaceCraft : MonoBehaviour
     [HideInInspector] public float currentVelocity; // to check 
 
     Rigidbody2D p_RigidBody; // rigidbody of the player 
+    SpriteRenderer sr;
 
-    [HideInInspector] public bool isFinished; // to determine if the game is finished 
+    [HideInInspector] public bool isFinished; // to determine if the game is finished
 
     void Start()
     {
@@ -34,14 +35,12 @@ public class SpaceCraft : MonoBehaviour
         moveClock = 0f;
 
         p_RigidBody = GetComponent<Rigidbody2D>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
     }
 
     
     void Update()
     {
-        
-
-
         if (isRight)
         {
             transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
@@ -116,15 +115,15 @@ public class SpaceCraft : MonoBehaviour
             finishCamera.enabled = true;
             isFinished = true;
         }
+    }
 
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.tag == "Obstacle")
-            {
-                isFinished = true;
-                player.SetActive(false);
-                print("zort");
-            }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        { // if the player hit an object, game over
+            isFinished = true;
+            sr.enabled = false;
+            p_RigidBody.bodyType = RigidbodyType2D.Static; // to stop the object and the camera to stop the view
         }
     }
 }
