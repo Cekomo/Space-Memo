@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2887911289495498975}
   - component: {fileID: 2887911289495498974}
-  - component: {fileID: 4958522658554362290}
   - component: {fileID: 5498123507274292886}
+  - component: {fileID: -5306160587964049713}
   m_Layer: 0
   m_Name: SpaceRock (11)
   m_TagString: Obstacle
@@ -84,41 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &4958522658554362290
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2887911289495498973}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.2947015, y: -0.3343043}
-  - {x: -0.4797149, y: -0.051076785}
-  - {x: -0.4546539, y: 0.15972325}
-  - {x: -0.37551522, y: 0.27539864}
-  - {x: -0.11588557, y: 0.48210394}
-  - {x: -0.01271243, y: 0.43601534}
-  - {x: 0.02484575, y: 0.36479783}
-  - {x: 0.11383289, y: 0.33284572}
-  - {x: 0.33701837, y: 0.17251469}
-  - {x: 0.3611233, y: 0.032046497}
-  - {x: 0.51318824, y: -0.24091536}
-  - {x: 0.29948592, y: -0.36875856}
-  - {x: 0.023543382, y: -0.46059713}
-  - {x: -0.10115628, y: -0.43706393}
-  - {x: -0.29961726, y: -0.33430424}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!50 &5498123507274292886
 Rigidbody2D:
   serializedVersion: 4
@@ -140,3 +105,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &-5306160587964049713
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2887911289495498973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.056665637, y: -0.011166334}
+  serializedVersion: 2
+  m_Radius: 0.41622457

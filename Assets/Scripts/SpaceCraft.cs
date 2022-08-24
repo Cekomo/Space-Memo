@@ -17,6 +17,7 @@ public class SpaceCraft : MonoBehaviour
     [HideInInspector] public bool isLeft; // move the spacecraft left if the variable is true
     [HideInInspector] public bool isRight; // move the spacecraft right if the variable is true
     private bool isUp; // force up the spacecraft if the variable is true
+    private bool isRightLeft; // first up function must be triggered to go left/right
 
     private int screenX = Screen.width; // to determine swipe action on x-axis
     private int screenY = Screen.height; // to determine swipe action on y-axis 
@@ -31,7 +32,7 @@ public class SpaceCraft : MonoBehaviour
 
     void Start()
     {
-        isLeft = false; isRight = false;
+        isLeft = false; isRight = false; isRightLeft = false;
         moveClock = 0f;
 
         p_RigidBody = GetComponent<Rigidbody2D>();
@@ -62,6 +63,7 @@ public class SpaceCraft : MonoBehaviour
             if (moveClock <= 0f)
                 isUp = false;
 
+            isRightLeft = true;
             currentVelocity = p_RigidBody.velocity.magnitude;
         }
 
@@ -72,22 +74,22 @@ public class SpaceCraft : MonoBehaviour
         // if statements to adjust direction and flight time
         if (Input.touchCount > 0 && !isRight && !isLeft && !isUp && Input.GetTouch(0).phase == TouchPhase.Ended && !isFinished)
         { // transform.position in the if statement is to limit the movement boundary of the player
-            if (Input.touches[0].position.x - startPos.x >= screenX / 1.75f && player.transform.position.x < 1.75f) // go right statement
+            if (Input.touches[0].position.x - startPos.x >= screenX / 1.75f && player.transform.position.x < 1.75f && isRightLeft) // go right statement
             {
                 moveClock = 1f;
                 isRight = true;
             }
-            else if (Input.touches[0].position.x - startPos.x >= screenX / 6 & player.transform.position.x < 1.75f) // go right statement
+            else if (Input.touches[0].position.x - startPos.x >= screenX / 6 & player.transform.position.x < 1.75f && isRightLeft) // go right statement
             {
                 moveClock = 0.5f;
                 isRight = true;
             }
-            else if (Input.touches[0].position.x - startPos.x <= -screenX / 1.75f && player.transform.position.x > -1.75f) // go left statement
+            else if (Input.touches[0].position.x - startPos.x <= -screenX / 1.75f && player.transform.position.x > -1.75f && isRightLeft) // go left statement
             {
                 moveClock = 1f;
                 isLeft = true;
             }
-            else if (Input.touches[0].position.x - startPos.x <= -screenX / 6 && player.transform.position.x > -1.75f) // go left statement
+            else if (Input.touches[0].position.x - startPos.x <= -screenX / 6 && player.transform.position.x > -1.75f && isRightLeft) // go left statement
             {
                 moveClock = 0.5f;
                 isLeft = true;
@@ -118,7 +120,7 @@ public class SpaceCraft : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision)
-    {
+    { // when collision happens, the camera sometimes go out the borders of the background
         if (collision.gameObject.tag == "Obstacle")
         { // if the player hit an object, game over
             isFinished = true;

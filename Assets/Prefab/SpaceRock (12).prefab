@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5975312282467414846}
   - component: {fileID: 5975312282467414847}
-  - component: {fileID: 2273990017041112346}
   - component: {fileID: 6806644778774641908}
+  - component: {fileID: 3146079173174629861}
   m_Layer: 0
   m_Name: SpaceRock (12)
   m_TagString: Obstacle
@@ -84,37 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &2273990017041112346
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5975312282467414844}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.42348018, y: 0.062279694}
-  - {x: -0.43468785, y: 0.14116739}
-  - {x: 0.034746557, y: 0.5289626}
-  - {x: 0.32880855, y: 0.2080665}
-  - {x: 0.45445225, y: -0.023501545}
-  - {x: 0.43371478, y: -0.3198023}
-  - {x: 0.14875476, y: -0.48431033}
-  - {x: -0.03780102, y: -0.51507723}
-  - {x: -0.22883806, y: -0.4440098}
-  - {x: -0.3652336, y: -0.15978613}
-  - {x: -0.42498738, y: 0.06731659}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!50 &6806644778774641908
 Rigidbody2D:
   serializedVersion: 4
@@ -136,3 +105,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &3146079173174629861
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5975312282467414844}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.021194765, y: -0.032755382}
+  serializedVersion: 2
+  m_Radius: 0.43012464
