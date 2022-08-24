@@ -4436,7 +4436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1084094947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5196,6 +5196,7 @@ GameObject:
   - component: {fileID: 1420104369}
   - component: {fileID: 1420104368}
   - component: {fileID: 1420104370}
+  - component: {fileID: 1420104371}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -5282,6 +5283,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceCraft: {fileID: 1914501503}
   backGround: {fileID: 1420104367}
+--- !u!50 &1420104371
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420104367}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &1433086515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
@@ -7812,6 +7834,7 @@ MonoBehaviour:
   isRight: 0
   moveSpeed: 1.8
   currentVelocity: 0
+  p_RigidBody: {fileID: 0}
   isFinished: 0
 --- !u!50 &1914501504
 Rigidbody2D:

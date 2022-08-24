@@ -22,10 +22,12 @@ public class SpaceCraft : MonoBehaviour
     private int screenX = Screen.width; // to determine swipe action on x-axis
     private int screenY = Screen.height; // to determine swipe action on y-axis 
     //private float moveClock; // determines the flight time for left/right 
+    
     public float moveSpeed; // to determine speed constant of spacecraft
-    [HideInInspector] public float currentVelocity; // to check 
+    [HideInInspector] public float currentVelocity; // to check the velocity of the spacecraft
+    [HideInInspector] public float speedFading; // to make more realistic stop on x-axis
 
-    Rigidbody2D p_RigidBody; // rigidbody of the player 
+    [HideInInspector] public Rigidbody2D p_RigidBody; // rigidbody of the player 
     SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
@@ -50,25 +52,31 @@ public class SpaceCraft : MonoBehaviour
         {
             if (Input.touches[0].position.x - startPos.x >= screenX / 3 && player.transform.position.x < 1.75f && isRightLeft)
             {
-                transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+                p_RigidBody.AddForce(transform.right * moveSpeed / 3);
+                //transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
                 isRight = true;
             }
             else if (Input.touches[0].position.x - startPos.x <= -screenX / 3 && player.transform.position.x > -1.75f && isRightLeft)
             {
-                transform.Translate(Vector2.right * -moveSpeed * Time.deltaTime);
+                p_RigidBody.AddForce(transform.right * -moveSpeed / 3);
+                //transform.Translate(Vector2.right * -moveSpeed * Time.deltaTime);
                 isLeft = true;
             }
             else if (Input.touches[0].position.y - startPos.y >= screenY / 4 && player.transform.position.y < 32f) // force up if swipe is along one sixth the screen
             {
-                p_RigidBody.AddForce(transform.up * moveSpeed / 10);
+                p_RigidBody.AddForce(transform.up * moveSpeed / 3);
 
                 isRightLeft = true;
                 currentVelocity = p_RigidBody.velocity.magnitude;
             }
         }
 
-        if (Input.touchCount == 0 || Mathf.Abs(player.transform.position.x) > 1.75f)
+
+        if (Input.touchCount == 0 || Mathf.Abs(player.transform.position.x) > 1.75f && !isFinished)
         {
+            speedFading = p_RigidBody.velocity.x * 0.985f; // speed decreases cumulatively (multiplied with 0.98 continuously)
+            p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
+            //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
             isRight = false; isLeft = false;
         }
 
