@@ -518,6 +518,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -592,6 +596,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -1031,6 +1039,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 3146079173174629861, guid: b25dc7777d829b746994ff96b07d9ed4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975312282467414844, guid: b25dc7777d829b746994ff96b07d9ed4, type: 3}
       propertyPath: m_Name
       value: SpaceRock (14)
@@ -1616,6 +1628,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -1828,6 +1844,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 3146079173174629861, guid: b25dc7777d829b746994ff96b07d9ed4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975312282467414844, guid: b25dc7777d829b746994ff96b07d9ed4, type: 3}
       propertyPath: m_Name
       value: SpaceRock (13)
@@ -1897,6 +1917,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7060296672229154855, guid: 2dac15d9bb8d4e84b854cfdd4aedb092, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6287967493935722196, guid: 2dac15d9bb8d4e84b854cfdd4aedb092, type: 3}
       propertyPath: m_Name
       value: SpaceRock (24)
@@ -2258,6 +2282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2401,6 +2429,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -4541,6 +4573,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5394,6 +5430,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5473,6 +5513,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -5841,6 +5885,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (12)
@@ -6316,6 +6364,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -6459,6 +6511,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (7)
@@ -6528,6 +6584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 5113123550067681448, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6599186853428932164, guid: b19f88acc3486fe4ab6dcebd4be6b0e1, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -6736,6 +6796,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (19)
@@ -7309,6 +7373,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -7597,6 +7665,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (18)
@@ -7675,6 +7747,7 @@ GameObject:
   - component: {fileID: 1914501501}
   - component: {fileID: 1914501500}
   - component: {fileID: 1914501503}
+  - component: {fileID: 1914501505}
   - component: {fileID: 1914501502}
   - component: {fileID: 1914501504}
   m_Layer: 0
@@ -7861,6 +7934,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1914501505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914501499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d707a5d3847ad438cfafea08dff328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceCraft: {fileID: 1914501503}
+  rocket: {fileID: 5670654056817659806, guid: 53aea858fab9c154aae18d08a8b14bfe, type: 3}
 --- !u!4 &1939385892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3402306052385655370, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
@@ -7878,6 +7965,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7060296672229154855, guid: 2dac15d9bb8d4e84b854cfdd4aedb092, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6287967493935722196, guid: 2dac15d9bb8d4e84b854cfdd4aedb092, type: 3}
       propertyPath: m_Name
       value: SpaceRock (6)
@@ -7947,6 +8038,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -8239,6 +8334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (16)
@@ -8387,6 +8486,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: 1464885589255259108, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3402306052385655368, guid: b4c5629443fcbfe46bc2e5264be3de64, type: 3}
       propertyPath: m_Name
       value: SpaceRock (8)
@@ -8530,6 +8633,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5772645}
     m_Modifications:
+    - target: {fileID: -7742635083349493388, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271331265339942789, guid: 93746137fdcfff04ba8a025b6c65969d, type: 3}
       propertyPath: m_RootOrder
       value: 21

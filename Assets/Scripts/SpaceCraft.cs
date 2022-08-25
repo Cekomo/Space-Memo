@@ -17,7 +17,7 @@ public class SpaceCraft : MonoBehaviour
     //[HideInInspector] public bool isLeft; // move the spacecraft left if the variable is true
     //[HideInInspector] public bool isRight; // move the spacecraft right if the variable is true
     //private bool isUp; // force up the spacecraft if the variable is true
-    private bool isRightLeft; // first up function must be triggered to go left/right
+    [HideInInspector] public bool isRightLeft; // first up function must be triggered to go left/right
     private bool isCounterMove; // to return back of the spacecraft when it exceeds borders
 
     private int screenX = Screen.width; // to determine swipe action on x-axis
