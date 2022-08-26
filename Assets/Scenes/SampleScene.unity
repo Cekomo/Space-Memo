@@ -7908,6 +7908,7 @@ MonoBehaviour:
   player: {fileID: 1914501499}
   mainCamera: {fileID: 519420031}
   finishCamera: {fileID: 1567824530}
+  isRightLeft: 0
   moveSpeed: 1.8
   currentVelocity: 0
   speedFading: 0
