@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5670654056817659795}
   - component: {fileID: 5670654056817659792}
-  - component: {fileID: 5670654056817659793}
   - component: {fileID: 5888277688768551298}
   - component: {fileID: 7874515458860037347}
+  - component: {fileID: -835595388649951926}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Rocket
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5670654056817659806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 9.960602, z: -0.5}
-  m_LocalScale: {x: 0.1, y: 0.07, z: 0.2}
+  m_LocalPosition: {x: 0.25, y: 9.960602, z: -2}
+  m_LocalScale: {x: 0.1, y: 0.06, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -85,22 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &5670654056817659793
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670654056817659806}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.015955368, y: 0.6207708}
-  m_Size: {x: 1.5376858, y: 5.516916}
-  m_Direction: 0
 --- !u!114 &5888277688768551298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d707a5d3847ad438cfafea08dff328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spaceCraft: {fileID: 0}
   rocket: {fileID: 5670654056817659806}
 --- !u!50 &7874515458860037347
 Rigidbody2D:
@@ -135,3 +120,52 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!68 &-835595388649951926
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5670654056817659806}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 0.86393005, y: -0.13322797}
+  - {x: 0.79172426, y: -0.8316969}
+  - {x: 0.5069928, y: -1.5814759}
+  - {x: 0.5948826, y: -1.6507126}
+  - {x: 0.58656776, y: -2.1467345}
+  - {x: 0.7823682, y: -2.278135}
+  - {x: 0.7641735, y: -3.1873682}
+  - {x: 0.61317044, y: -3.3657212}
+  - {x: 0.5791255, y: -3.453332}
+  - {x: 0.29683796, y: -3.5891988}
+  - {x: -0.022171319, y: -3.6214964}
+  - {x: -0.46143663, y: -3.5006502}
+  - {x: -0.5178101, y: -3.4041383}
+  - {x: -0.7564047, y: -3.2284873}
+  - {x: -0.75666326, y: -2.3465292}
+  - {x: -0.5589997, y: -2.127041}
+  - {x: -0.56168574, y: -1.746223}
+  - {x: -0.49578783, y: -1.5973386}
+  - {x: -0.6855874, y: -1.0174091}
+  - {x: -0.834208, y: -0.3128184}
+  - {x: -0.81260777, y: 2.6989803}
+  - {x: -0.7849715, y: 2.7193415}
+  - {x: -0.37688, y: 3.4504282}
+  - {x: -0.019913763, y: 3.6210246}
+  - {x: 0.29468206, y: 3.5312362}
+  - {x: 0.47523552, y: 3.3109376}
+  - {x: 0.7123419, y: 2.8476584}
+  - {x: 0.8524026, y: 2.4570649}
+  - {x: 0.86104417, y: -0.13696353}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
