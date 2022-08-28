@@ -9,8 +9,8 @@ public class SpaceCraft : MonoBehaviour
 
     public GameObject player;
     public Camera mainCamera; // gameobject to represent camera
-    public Camera finishCamera; // this activates when the view needs to stop
-    private Vector3 cameraPos; // detects position of mainCamera to transform it to finishCamera
+    //public Camera finishCamera; // this activates when the view needs to stop
+    //private Vector3 cameraPos; // detects position of mainCamera to transform it to finishCamera
     
     //private int pD = 100; // pixel distance to detect the swipe action
     private Vector2 startPos; // first touch / mouse press
@@ -35,6 +35,9 @@ public class SpaceCraft : MonoBehaviour
     SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
+    public int maxValue; // sets upper border
+
+    void Awake() { maxValue = 32; }
 
     void Start()
     {
@@ -65,13 +68,13 @@ public class SpaceCraft : MonoBehaviour
         {
             if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)
             {
-                p_RigidBody.AddForce(transform.right * moveSpeed / 3);
+                p_RigidBody.AddForce(transform.right * moveSpeed / 2);
                 //transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
                 isLeft = false; isUp = false;
             }
             else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && player.transform.position.x > -1.7f && isRightLeft && isLeft)
             {
-                p_RigidBody.AddForce(transform.right * -moveSpeed / 3);
+                p_RigidBody.AddForce(transform.right * -moveSpeed / 2);
                 //transform.Translate(Vector2.right * -moveSpeed * Time.deltaTime);
                 isRight = false; isUp = false;
             }
@@ -111,7 +114,7 @@ public class SpaceCraft : MonoBehaviour
                 isCounterMove = false; // turning back lasts until coordinate < |1.7f|
         }
         
-        if (player.transform.position.y > 32 && !isFinished) // Y: 32 is the maximum vertical distance for map
+        if (player.transform.position.y > maxValue && !isFinished) // Y: 32 is the maximum vertical distance for map
         { 
             isFinished = true;
 

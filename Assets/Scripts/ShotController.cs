@@ -29,7 +29,6 @@ public class ShotController : MonoBehaviour
     // double click rocket initialization works little bit problematic 
     void Update()
     {
-        print(isButton);
         if (Input.touchCount > 0)
             if (isButton && spaceCraft.isRightLeft) // (shotCaller >= 2 || isButton) && spaceCraft.isRightLeft
             { // if another click occurs at the short time interval
@@ -50,7 +49,7 @@ public class ShotController : MonoBehaviour
             flyTime += Time.deltaTime;
             if (flyTime < 0.5f) // for more realistic acceleration and speed, adjust time and constant below
             { // add the current velocity of spacecraft and launching speed 
-                rocketVelocity = new Vector3(0f, (spaceCraft.currentVelocity + 10) * (Time.deltaTime * 100), -0.5f); // seems fine
+                rocketVelocity = new Vector3(0f, (spaceCraft.currentVelocity + 10) * (Time.deltaTime * 100), 0f); // seems fine
                 rocketClone.GetComponent<Rigidbody2D>().AddForce(rocketVelocity); // (Mathf.Log(spaceCraft.currentVelocity, 1.5f)               
             }
         }
@@ -79,7 +78,7 @@ public class ShotController : MonoBehaviour
 
     public void RocketLauncher()
     {
-        if (flyTime == 0f)
+        if (flyTime == 0f && spaceCraft.isRightLeft && !spaceCraft.isFinished)
         {
             isButton = true; // make the button available after 5 seconds
             rocketButton.alpha = 0.4f;
