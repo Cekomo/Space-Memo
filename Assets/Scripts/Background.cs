@@ -10,7 +10,7 @@ public class BackGround : MonoBehaviour
     public GameObject backGround; // to represent background
     private Rigidbody2D bg_Rigidbody; // to adjust the position of the background
     private Vector3 backgroundPos; // get the position to move the background with respect to slider
-
+    private Vector2 zort;
     // there is background upper border synchronization problem, not that important
     void Start()
     {
@@ -26,10 +26,10 @@ public class BackGround : MonoBehaviour
             if (backGround.transform.position.y < spaceCraft.maxValue)
             { 
                 // !!! check translate function when the borders etc. is changed !!! ---------------------
-                transform.Translate(Vector2.up * mapInspector.cameraVelocity * 0.1f); 
-                //print(mapInspector.cameraVelocity);
+                transform.Translate(Vector2.up * mapInspector.cameraVelocity * 0.1f);
+                //print(transform.position);
             }
-        else if (spaceCraft.isFinished) // to prevent background slipping after collision
+            else if (spaceCraft.isFinished) // to prevent background slipping after collision
             bg_Rigidbody.velocity = new Vector2(0, 0);
     }
 }

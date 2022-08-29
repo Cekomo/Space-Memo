@@ -15,6 +15,7 @@ public class MapInspector : MonoBehaviour
     [HideInInspector] public float cameraVelocity; // camera's velocity to adjust background speed
 
     [HideInInspector] public bool moveEnd; // go towards maxValue when play button is pressed
+    private float slideDistance; // distance between camera and pointed value by slider
 
     void Start()
     {
@@ -48,6 +49,33 @@ public class MapInspector : MonoBehaviour
             }
         else // stop if the handle is moving
             mapSlider.value = mapSlider.value;
+        slideDistance = mapSlider.value - cameraPos.y;
+        //print(slideDistance);
+        //if (mapSlider.value < cameraPos.y + )
+    }
+
+    public void SliderCatcher() // it adjusts main camera with respect to the value of slider
+    { // i ignored the background movement for now
+        // printing inside the function affects speed of background??
+        slideDistance = mapSlider.value - cameraPos.y; // calculate it to determine how much unit to go
+        if (slideDistance < -1f)
+        {
+            for (int i = 0; i < mapSlider.value; i++)
+                if (cameraPos.y > mapSlider.value)
+                {
+                    cameraPos = GetComponent<Camera>().transform.position - new Vector3(0f, 0.3f * Time.deltaTime, 0f);
+                    GetComponent<Camera>().transform.position = cameraPos; // assign camera's new position
+                }
+        }
+        else if (slideDistance > 1f)
+        {
+            for (int i = 0; i < mapSlider.value; i++)
+                if (cameraPos.y < mapSlider.value)
+                {
+                    cameraPos = GetComponent<Camera>().transform.position + new Vector3(0f, 0.3f * Time.deltaTime, 0f);
+                    GetComponent<Camera>().transform.position = cameraPos; // assign camera's new position
+                }
+        }
     }
 
     public void StartPlay() // function to show the map and start the game
