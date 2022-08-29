@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MapInspector : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class MapInspector : MonoBehaviour
 
     [HideInInspector] public bool moveEnd; // go towards maxValue when play button is pressed
     private float slideDistance; // distance between camera and pointed value by slider
+    private bool isClicked; // to determine if sldier is clicked or not
 
     void Start()
     {
+        isClicked = false;
         moveEnd = false;
         mapSlider.maxValue = spaceCraft.maxValue;
     }
@@ -58,24 +61,35 @@ public class MapInspector : MonoBehaviour
     { // i ignored the background movement for now
         // printing inside the function affects speed of background??
         slideDistance = mapSlider.value - cameraPos.y; // calculate it to determine how much unit to go
-        if (slideDistance < -1f)
+        if (slideDistance < -0.01f)
         {
+            moveEnd = true;
             for (int i = 0; i < mapSlider.value; i++)
                 if (cameraPos.y > mapSlider.value)
                 {
-                    cameraPos = GetComponent<Camera>().transform.position - new Vector3(0f, 0.3f * Time.deltaTime, 0f);
+                    cameraPos = GetComponent<Camera>().transform.position - new Vector3(0f, 1f * Time.deltaTime, 0f);
                     GetComponent<Camera>().transform.position = cameraPos; // assign camera's new position
                 }
+            //isClicked = false;
         }
-        else if (slideDistance > 1f)
+        else if (slideDistance > 0.01f)
         {
+            moveEnd = true;
             for (int i = 0; i < mapSlider.value; i++)
                 if (cameraPos.y < mapSlider.value)
                 {
-                    cameraPos = GetComponent<Camera>().transform.position + new Vector3(0f, 0.3f * Time.deltaTime, 0f);
+                    cameraPos = GetComponent<Camera>().transform.position + new Vector3(0f, 1f * Time.deltaTime, 0f);
                     GetComponent<Camera>().transform.position = cameraPos; // assign camera's new position
                 }
+            //isClicked = false;
         }
+    }
+
+    public void OnPointerUp()
+    {
+        moveEnd = false;
+        //isClicked = true;
+        //print("zort");
     }
 
     public void StartPlay() // function to show the map and start the game
