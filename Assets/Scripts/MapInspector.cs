@@ -18,12 +18,16 @@ public class MapInspector : MonoBehaviour
     [HideInInspector] public bool moveEnd; // go towards maxValue when play button is pressed
     private float slideDistance; // distance between camera and pointed value by slider
     private bool isClicked; // to determine if sldier is clicked or not
+    //private SpriteRenderer sr;
 
     void Start()
     {
         isClicked = false;
         moveEnd = false;
         mapSlider.maxValue = spaceCraft.maxValue;
+
+        //sr = spaceCraft.player.GetComponent<SpriteRenderer>();
+        //sr.enabled = false; // do not show the spacecraft for the map inspection
     }
 
     // Update is called once per frame
@@ -52,6 +56,7 @@ public class MapInspector : MonoBehaviour
             }
         else // stop if the handle is moving
             mapSlider.value = mapSlider.value;
+        
         slideDistance = mapSlider.value - cameraPos.y;
         //print(slideDistance);
         //if (mapSlider.value < cameraPos.y + )
@@ -100,6 +105,10 @@ public class MapInspector : MonoBehaviour
             playButton.gameObject.SetActive(false);
             mapSlider.gameObject.SetActive(false);
             spaceCraft.isFinished = false;
+
+            // lock the camera at the beginning to start
+            //sr.enabled = true; // show the spacecraft to start
+            GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // reset the position of camera
         }
         else if (!moveEnd)
             moveEnd = true;       

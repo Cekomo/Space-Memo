@@ -32,7 +32,7 @@ public class SpaceCraft : MonoBehaviour
     [HideInInspector] public float speedFading; // to make more realistic stop on x-axis
 
     [HideInInspector] public Rigidbody2D p_RigidBody; // rigidbody of the player 
-    SpriteRenderer sr; // sprite indicator to disable the spacecraft image
+    private SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
     public int maxValue; // sets upper border

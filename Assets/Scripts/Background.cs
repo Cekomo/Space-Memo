@@ -29,8 +29,16 @@ public class BackGround : MonoBehaviour
                 transform.Translate(Vector2.up * mapInspector.cameraVelocity * 0.1f);
                 //print(transform.position);
             }
-            else if (spaceCraft.isFinished) // to prevent background slipping after collision
+        else if (spaceCraft.isFinished) // to prevent background slipping after collision
             bg_Rigidbody.velocity = new Vector2(0, 0);
+
+        if (mapInspector.mapSlider.value == spaceCraft.maxValue && !spaceCraft.isFinished)
+            transform.position = new Vector3(0.06f, 5.5f, 0f); // reset the background position
+
+        // below statement adjust the background while sliding after finger up
+        if (!mapInspector.moveEnd && transform.position.y != mapInspector.mapSlider.value)
+            transform.position = new Vector3(0.06f, mapInspector.mapSlider.value+5.5f, 0f);
+        
     }
 }
 
