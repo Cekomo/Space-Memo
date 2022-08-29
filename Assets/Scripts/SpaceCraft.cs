@@ -41,6 +41,8 @@ public class SpaceCraft : MonoBehaviour
 
     void Start()
     {
+        // if any problem occurs, check isFinished 
+        isFinished = true; // the game should not start until play button is pressed when slider is at the end
         currentVelocity = 0f; // velocity of spacecraft
         
         //isLeft = false; isRight = false; 
@@ -78,8 +80,8 @@ public class SpaceCraft : MonoBehaviour
                 //transform.Translate(Vector2.right * -moveSpeed * Time.deltaTime);
                 isRight = false; isUp = false;
             }
-            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && player.transform.position.y < 32f && isUp) // force up if swipe is along one sixth the screen
-            {
+            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && player.transform.position.y < maxValue && isUp)
+            { // force up if swipe is along one sixth the screen
                 p_RigidBody.AddForce(transform.up * moveSpeed / 3);
 
                 isRightLeft = true;

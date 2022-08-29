@@ -5908,6 +5908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceCraft: {fileID: 1914501503}
+  mapInspector: {fileID: 519420033}
   backGround: {fileID: 1420104367}
 --- !u!50 &1420104371
 Rigidbody2D:
