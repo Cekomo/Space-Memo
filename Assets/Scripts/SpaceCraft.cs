@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpaceCraft : MonoBehaviour
 {
+    public MovementController movementController; 
+    
     // move the object right and left by swiping 
     // determine a border for left/right movememnt for player to not exceed the screen limits
 

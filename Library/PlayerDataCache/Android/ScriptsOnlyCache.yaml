@@ -3,14 +3,18 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - BackGround
     - ControlPanel
+    - MapInspector
     - ShotController
     - SpaceCraft
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -26,11 +30,13 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -58,6 +64,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1524}
     - Class: 114
+      Script: {instanceID: 1726}
+    - Class: 114
       Script: {instanceID: 2394}
     - Class: 114
       Script: {instanceID: 2702}
@@ -72,9 +80,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3806}
     - Class: 114
-      Script: {instanceID: 5386}
+      Script: {instanceID: 4276}
     - Class: 114
-      Script: {instanceID: 5634}
+      Script: {instanceID: 5282}
+    - Class: 114
+      Script: {instanceID: 5388}
+    - Class: 114
+      Script: {instanceID: 5636}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -204,7 +216,7 @@ ScriptsOnlyBuild:
     className: CinemachinePixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 384ab815724a862b68e32cb469de4b2c
+      Hash: c7e10a42879af3a8358e114e69c959d5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BackGround
@@ -570,6 +582,12 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
+      Hash: 6d54b6043ef1daeaa6d7e5bb23949e52
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MapInspector
+  - hash:
+      serializedVersion: 2
       Hash: fd68d84f33fad85aac38f2739c0ee270
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -594,7 +612,7 @@ ScriptsOnlyBuild:
     className: BufferManager
   - hash:
       serializedVersion: 2
-      Hash: 9e0d1b8802553c3aecc862dfb4e591d4
+      Hash: 6d66447107b8b204ccdaae8a3f627d96
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpaceCraft
@@ -628,6 +646,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 8f3f332614ac12c8bb4a8b213cf53b9c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MovementController
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
