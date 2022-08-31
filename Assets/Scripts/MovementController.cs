@@ -15,12 +15,12 @@ public class MovementController : MonoBehaviour
     private bool isLeft; // to move towards left only during single finger touch
     private bool isUp;  // to move towards rigth only during single finger touch
 
-    private int[] movementCatcher; // assign the actions of spacecraft as numbers
-    private float[] holdDownTime; // holding down time of each movement
+    [HideInInspector] public int[] movementCatcher; // assign the actions of spacecraft as numbers
+    [HideInInspector] public float[] holdDownTime; // holding down time of each movement
     private float holdDownClock; // to count holding down time for each element of holdDownTime
     private int k; // to set the index of movementCatcher
 
-    private float[] idleTime; // the time between two actions where the system is being idle as touchInput
+    [HideInInspector] public float[] idleTime; // the time between two actions where the system is being idle as touchInput
     private float idleClock; // to count idle time for each element of holdDownTime
 
     void Start()
