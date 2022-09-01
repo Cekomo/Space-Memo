@@ -41,20 +41,24 @@ public class SpaceCraft : MonoBehaviour
     public int maxValue; // sets upper border
     
     private int j; // to adjust the index of movement control arrays
-    private float holdDownClock; // to count holding down time for each element of holdDownTime
-    private float idleClock; // to count the idle time of the system in terms of touch input
+    private int k; // to adjust the index of idle time arrays
+    //private float holdDownClock; // to count holding down time for each element of holdDownTime
+    //private float idleClock; // to count the idle time of the system in terms of touch input
     private bool idleLoadTransition; // boolean to swap between holddown and idle operations
 
     void Awake() { maxValue = 32; }
 
+
+    // references brokes the system but the principle works as a general concept
+    // camera does not stop after the game finishes
     void Start()
     {
         idleLoadTransition = false; // false means the system work on load
         toGo = true;
         
-        j = 1; // it is started from 1 due to the first unassinged index
-        holdDownClock = movementController.holdDownTime[j];
-        idleClock = movementController.idleTime[j];         
+        j = 0; k = 0;
+        //holdDownClock = movementController.holdDownTime[j];
+        //idleClock = movementController.idleTime[j];
 
         // if any problem occurs, check isFinished 
         isFinished = true; // the game should not start until play button is pressed when slider is at the end
@@ -72,7 +76,7 @@ public class SpaceCraft : MonoBehaviour
     { 
         // to adjust the speed of camera on y-axis
         if (!isFinished) // spacecraft is shaking when camera movement is in update() function
-            Camera.main.transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
+            Camera.main.transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);   
     }
 
     void Update()
@@ -80,28 +84,43 @@ public class SpaceCraft : MonoBehaviour
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
         //        startPos = Input.touches[0].position;
-         
-        if (holdDownClock > 0.01f && !isFinished)
+
+        //if (!idleLoadTransition && !isFinished) print("Going " + movementController.movementCatcher[j] + " for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+        //else if (idleLoadTransition && !isFinished) print("Being idle for " + idleClock.ToString() + " seconds.");
+
+        //if (!isFinished)
+        //    for (int i = 0; i < movementController.holdDownTime.Length; i++)
+        //    {
+        //        print(movementController.holdDownTime[i]);
+        //    }
+        if (!isFinished)
+        {
+            print("time "+movementController.holdDownTime[j + 1].ToString());
+            print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
+        }
+        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished)
         {
             //if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)
-            if (movementController.movementCatcher[j] == 1 && holdDownClock > 0 && !idleLoadTransition)
+            if (movementController.movementCatcher[j+1] == 1 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
             { // maintain until holding time is greater than zero 
                 if (toGo) p_RigidBody.AddForce(transform.right * moveSpeed / 2);
                 //transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
                 isLeft = false; isUp = false;
 
-                holdDownClock -= Time.deltaTime; // decrase the timer for each force action
+                movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
+                print("Going rigth for " + movementController.holdDownTime[j+1].ToString() + " seconds");
             }
-            else if (movementController.movementCatcher[j] == 2 && holdDownClock > 0 && !idleLoadTransition)
+            else if (movementController.movementCatcher[j+1] == 2 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
             {
                 if (toGo) p_RigidBody.AddForce(transform.right * -moveSpeed / 2);
                 //transform.Translate(Vector2.right * -moveSpeed * Time.deltaTime);
                 isRight = false; isUp = false;
 
-                holdDownClock -= Time.deltaTime; // decrase the timer for each force action
+                movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
+                print("Going left for " + movementController.holdDownTime[j+1].ToString() + " seconds");
             }
             //else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && player.transform.position.y < maxValue && isUp)
-            else if (movementController.movementCatcher[j] == 3 && holdDownClock > 0 && !idleLoadTransition)
+            else if (movementController.movementCatcher[j+1] == 3 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
             { // force up if swipe is along one sixth the screen
                 p_RigidBody.AddForce(transform.up * moveSpeed / 3);
 
@@ -109,7 +128,8 @@ public class SpaceCraft : MonoBehaviour
                 currentVelocity = p_RigidBody.velocity.magnitude;
                 isRight = false; isLeft = false;
 
-                holdDownClock -= Time.deltaTime; // decrase the timer for each force action
+                movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
+                print("Going up for " + movementController.holdDownTime[j+1].ToString() + " seconds");
             }
         }
 
@@ -119,7 +139,7 @@ public class SpaceCraft : MonoBehaviour
             //movementController.holdDownTime[j] = 0f; // this can not be implemented since it brokes balance of timing
         }
 
-        if (holdDownClock < 0.01f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished) // discard !isFinished by controllin
+        if (movementController.holdDownTime[j+1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished) // discard !isFinished by controllin
         {
             speedFading = p_RigidBody.velocity.x * 0.96f; // speed decreases cumulatively (multiplied with 0.96  continuously)
             p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
@@ -129,26 +149,30 @@ public class SpaceCraft : MonoBehaviour
                 isCounterMove = true; // make the counter move available if velocity is zero out of the border
         }
 
-        if (holdDownClock < 0.01f && (!isUp || !isRight || !isLeft)) // to make them all true for the next move
+        if (movementController.holdDownTime[j+1] < 0.01f && (!isUp || !isRight || !isLeft) && !isFinished) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
             j++;
-            movementController.holdDownTime[j] = holdDownClock;
+            //movementController.holdDownTime[j+1] = movementController.holdDownTime[j+1];
             // movementController.movementCatcher[j] = movementType; // this can be implemented to have less reference from another class
+            print("poop");
+            
             toGo = true;
             idleLoadTransition = true;
         }
 
-        if (idleLoadTransition) // wait until idle time in queue is over
-            idleClock -= Time.deltaTime;
+        if (idleLoadTransition && !isFinished) // wait until idle time in queue is over
+            movementController.idleTime[k+1] -= Time.deltaTime;
 
-        if (idleClock < 0.01f) // hand queue over to holding operation
+        if (movementController.idleTime[k+1] < 0.01f && !isFinished) // hand queue over to holding operation
         {
             idleLoadTransition = false;
-            idleClock = movementController.idleTime[j];
+            k++;
+            //idleClock = movementController.idleTime[k]; // check if indexing works
+            
         }
 
-        if (isCounterMove && Mathf.Abs(player.transform.position.x) > 1.7f)
+        if (!isFinished && Mathf.Abs(player.transform.position.x) > 1.7f)
         { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
             if (player.transform.position.x < -1.7f) // if left border exceeds
                 transform.Translate(Vector2.right * 0.5f * Time.deltaTime);

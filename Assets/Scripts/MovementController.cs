@@ -47,19 +47,19 @@ public class MovementController : MonoBehaviour
 
         if (Input.touchCount > 0)
         { // 1: go right, 2: go left, 3: go up
-            if (Input.touches[0].position.x - startPos.x >= screenX / 5 && spaceCraft.isRightLeft && isRight)
+            if (Input.touches[0].position.x - startPos.x >= screenX / 5 && spaceCraft.isRightLeft && isRight && spaceCraft.isFinished)
             {
                 movementCatcher[k] = 1;
 
                 isLeft = false; isUp = false;
             }
-            else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && spaceCraft.isRightLeft && isLeft)
+            else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && spaceCraft.isRightLeft && isLeft && spaceCraft.isFinished)
             { 
                 movementCatcher[k] = 2;
 
                 isRight = false; isUp = false;
             }
-            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp)
+            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp && spaceCraft.isFinished)
             { // trigger if swipe is along one sixth the screen
                 movementCatcher[k] = 3;
 
@@ -68,18 +68,18 @@ public class MovementController : MonoBehaviour
             }
         }
 
-        if (!isLeft || !isRight || !isUp)
+        if ((!isLeft || !isRight || !isUp) && spaceCraft.isFinished)
         { // to count holding down time for go up/left/right
             holdDownClock += Time.deltaTime;
         }
 
-        if (spaceCraft.isRightLeft && isLeft && isRight && isUp)
+        if (spaceCraft.isRightLeft && isLeft && isRight && isUp && spaceCraft.isFinished)
         { // to count the time when there is no screen touching
             idleClock += Time.deltaTime;
         }
 
         // !!first element is passed as unassigned!!
-        if (Input.touchCount == 0 && (!isUp || !isRight || !isLeft)) // to make them all true for the next move
+        if (Input.touchCount == 0 && (!isUp || !isRight || !isLeft) && spaceCraft.isFinished) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
             holdDownTime[k] = holdDownClock;
@@ -87,7 +87,7 @@ public class MovementController : MonoBehaviour
             k++;
         }
 
-        if (Input.touchCount > 0 && spaceCraft.isRightLeft)
+        if (Input.touchCount > 0 && spaceCraft.isRightLeft && spaceCraft.isFinished)
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 //print(k);
@@ -97,12 +97,12 @@ public class MovementController : MonoBehaviour
 
         // below statements show action and idle time between actions as array
 
-        //if (!spaceCraft.isFinished)
-        //    for (int i = 0; i < k; i++)
-        //        print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
+        if (!spaceCraft.isFinished)
+            for (int i = 0; i < k; i++)
+                print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
 
         //if (!spaceCraft.isFinished)
-        //    for (int i = 0; i < k-1; i++)
+        //    for (int i = 0; i < k - 1; i++)
         //        print(i.ToString() + ": Idle time: " + idleTime[i]);
     }
 }
