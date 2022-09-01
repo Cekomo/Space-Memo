@@ -10,6 +10,9 @@ public class MapInspector : MonoBehaviour
     
     [SerializeField] public Slider mapSlider;
     [SerializeField] Button playButton; // the button that manipulates slider
+    [SerializeField] Button startButton; // the button that starts the record
+    [SerializeField] Button rocketButton; // the button that launches a rocket
+
     // min value may be required
     private Vector3 cameraPos; // adjusts the position of the main camera with respect to slider
     private float tempPos; // temporary position for camera
@@ -17,17 +20,23 @@ public class MapInspector : MonoBehaviour
 
     [HideInInspector] public bool moveEnd; // go towards maxValue when play button is pressed
     private float slideDistance; // distance between camera and pointed value by slider
-    private bool isClicked; // to determine if sldier is clicked or not
-    //private SpriteRenderer sr;
+    //private bool isClicked; // to determine if sldier is clicked or not
+    private SpriteRenderer sr;
+
+    private Image img;
 
     void Start()
     {
-        isClicked = false;
+        //isClicked = false;
         moveEnd = false;
         mapSlider.maxValue = spaceCraft.maxValue;
 
-        //sr = spaceCraft.player.GetComponent<SpriteRenderer>();
-        //sr.enabled = false; // do not show the spacecraft for the map inspection
+        rocketButton.gameObject.SetActive(false); // at inspector, rocket button should not be visible
+
+        sr = spaceCraft.player.GetComponent<SpriteRenderer>();
+        sr.enabled = false; // do not show the spacecraft for the map inspection
+
+        //GetComponentInChildren<Button>().restartSign.image.enabled = false; // restart pops up after slider is at the end
     }
 
     // Update is called once per frame
@@ -88,6 +97,15 @@ public class MapInspector : MonoBehaviour
                 }
             //isClicked = false;
         }
+
+        if (!spaceCraft.isFinished) // if the game starts, disable the quick-start button
+            startButton.gameObject.SetActive(false);
+        else if (mapSlider.value == spaceCraft.maxValue)
+        {
+            //GetComponentInChildren<Button>().playSign.image.enabled = false;
+            //GetComponentInChildren<Button>().restartSign.image.enabled = true;
+
+        }
     }
 
     public void OnPointerUp()
@@ -97,22 +115,35 @@ public class MapInspector : MonoBehaviour
         //print("zort");
     }
 
-    public void StartPlay() // function to show the map and start the game
-    {
+    public void Replay() // function to show the map and start the game
+    { // !!this function can broke the code due to changes!! ----------------
         if (mapSlider.value == spaceCraft.maxValue)
-        { // if play button is activated when the slider at the upper end
-            // ..then start the game by disabling slider panel
-            playButton.gameObject.SetActive(false);
-            mapSlider.gameObject.SetActive(false);
-            spaceCraft.isFinished = false;
-
-            // lock the camera at the beginning to start
-            //sr.enabled = true; // show the spacecraft to start
-            GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // reset the position of camera
+        {
+            mapSlider.value = 0; // reset the slider value if the button is pressed at max
+            GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // return initial position of camera
+            moveEnd = false; // stop the handle when play is pressed at the end
+            
+            // make restart unvisible and play image to visible to start from beginning
+            //GetComponentInChildren<Button>().playSign.image.enabled = true;
+            //GetComponentInChildren<Button>().restartSign.image.enabled = false;
         }
         else if (!moveEnd)
             moveEnd = true;       
         else if (moveEnd)
             moveEnd = false;
+    }
+
+    public void StartPlay()
+    {
+        // deactivate inspector buttons and activate rocket to start the record
+        playButton.gameObject.SetActive(false);
+        mapSlider.gameObject.SetActive(false);
+        rocketButton.gameObject.SetActive(true);
+
+        spaceCraft.isFinished = false;
+
+        // lock the camera at the beginning to start
+        sr.enabled = true; // show the spacecraft to start
+        GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // reset the position of camera
     }
 }
