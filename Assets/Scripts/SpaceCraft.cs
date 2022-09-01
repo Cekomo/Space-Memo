@@ -75,7 +75,7 @@ public class SpaceCraft : MonoBehaviour
     void FixedUpdate()
     { 
         // to adjust the speed of camera on y-axis
-        if (!isFinished) // spacecraft is shaking when camera movement is in update() function
+        if (!isFinished && player.transform.position.y < maxValue) // spacecraft is shaking when camera movement is in update() function
             Camera.main.transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);   
     }
 
@@ -93,11 +93,13 @@ public class SpaceCraft : MonoBehaviour
         //    {
         //        print(movementController.holdDownTime[i]);
         //    }
-        if (!isFinished)
-        {
-            print("time "+movementController.holdDownTime[j + 1].ToString());
-            print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
-        }
+        //if (!isFinished)
+        //{
+        //    print("time "+movementController.holdDownTime[j + 1].ToString());
+        //    print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
+        //}
+
+        print(isFinished);
         if (movementController.holdDownTime[j+1] > 0.01f && !isFinished)
         {
             //if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)

@@ -97,9 +97,9 @@ public class MovementController : MonoBehaviour
 
         // below statements show action and idle time between actions as array
 
-        if (!spaceCraft.isFinished)
-            for (int i = 0; i < k; i++)
-                print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
+        //if (!spaceCraft.isFinished)
+        //    for (int i = 0; i < k; i++)
+        //        print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
 
         //if (!spaceCraft.isFinished)
         //    for (int i = 0; i < k - 1; i++)
