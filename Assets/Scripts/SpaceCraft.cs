@@ -169,6 +169,7 @@ public class SpaceCraft : MonoBehaviour
         if (movementController.idleTime[k+1] < 0.01f && !isFinished) // hand queue over to holding operation
         {
             idleLoadTransition = false;
+
             k++;
             //idleClock = movementController.idleTime[k]; // check if indexing works
             

@@ -77,7 +77,7 @@ public class ShotController : MonoBehaviour
 
     public void RocketLauncher()
     {
-        if (flyTime == 0f && spaceCraft.isRightLeft && spaceCraft.isFinished)
+        if (flyTime == 0f && spaceCraft.isRightLeft && !spaceCraft.isFinished)
         {
             isButton = true; // make the button available after 5 seconds
             rocketButton.alpha = 0.4f;

@@ -8,7 +8,7 @@ public class MapInspector : MonoBehaviour
 {
     public SpaceCraft spaceCraft;
     
-    [SerializeField] public Slider mapSlider;
+    public Slider mapSlider;
     [SerializeField] Button playButton; // the button that manipulates slider
     [SerializeField] Button startButton; // the button that starts the record
     [SerializeField] Button rocketButton; // the button that launches a rocket
@@ -98,14 +98,14 @@ public class MapInspector : MonoBehaviour
             //isClicked = false;
         }
 
-        if (!spaceCraft.isFinished) // if the game starts, disable the quick-start button
-            startButton.gameObject.SetActive(false);
-        else if (mapSlider.value == spaceCraft.maxValue)
-        {
-            //GetComponentInChildren<Button>().playSign.image.enabled = false;
-            //GetComponentInChildren<Button>().restartSign.image.enabled = true;
+        //if (!spaceCraft.isFinished) // if the game starts, disable the quick-start button
+        //    startButton.gameObject.SetActive(false);
+        //else if (mapSlider.value == spaceCraft.maxValue)
+        //{
+        //    //GetComponentInChildren<Button>().playSign.image.enabled = false;
+        //    //GetComponentInChildren<Button>().restartSign.image.enabled = true;
 
-        }
+        //}
     }
 
     public void OnPointerUp()
