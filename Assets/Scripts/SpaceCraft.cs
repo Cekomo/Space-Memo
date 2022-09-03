@@ -10,6 +10,10 @@ public class SpaceCraft : MonoBehaviour
     // determine a border for left/right movememnt for player to not exceed the screen limits
 
     public GameObject player;
+    private GameObject thrusterLeft; // it represents left thruster flame
+    private GameObject thrusterMid; // it represents middle thruster flame
+    private GameObject thrusterRight; // it represents right thruster flame
+
     public Camera mainCamera; // gameobject to represent camera
     //public Camera finishCamera; // this activates when the view needs to stop
     //private Vector3 cameraPos; // detects position of mainCamera to transform it to finishCamera
@@ -38,6 +42,7 @@ public class SpaceCraft : MonoBehaviour
     private SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
+    //private bool isThruster; // determine if the thruster launches
     public int maxValue; // sets upper border
     
     private int j; // to adjust the index of movement control arrays
@@ -55,6 +60,7 @@ public class SpaceCraft : MonoBehaviour
     {
         idleLoadTransition = false; // false means the system work on load
         toGo = true;
+        //isThruster = false; 
         
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
@@ -70,6 +76,10 @@ public class SpaceCraft : MonoBehaviour
         p_RigidBody = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         mainCamera = gameObject.GetComponent<Camera>();
+
+        thrusterLeft = player.transform.GetChild(0).gameObject; // reference to represent the thruster flame left
+        thrusterMid = player.transform.GetChild(1).gameObject; ; // reference to represent the thruster flame mid
+        thrusterRight = player.transform.GetChild(2).gameObject; ; // reference to represent the thruster flame right
     }
 
     void FixedUpdate()
@@ -79,6 +89,7 @@ public class SpaceCraft : MonoBehaviour
             Camera.main.transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);   
     }
 
+    // it would be nice if border exceed is expressed with a reference
     void Update()
     {
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
@@ -99,8 +110,26 @@ public class SpaceCraft : MonoBehaviour
         //    print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
         //}
 
-        print(isFinished);
-        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished)
+        // i will adjust the active position of thruster flames
+        if (!isFinished || player.transform.position.y > maxValue)
+        { // activate if there is a force
+            thrusterLeft.SetActive(true);
+            thrusterMid.SetActive(true);
+            thrusterRight.SetActive(true);
+        }
+        else
+        { // deactivate if there is no force
+            thrusterLeft.SetActive(false);
+            thrusterMid.SetActive(false);
+            thrusterRight.SetActive(false);
+        }
+
+        //if (!isFinished) // lock the thruster if isFinished is true
+        //    isThruster = true;
+        //else 
+        //    isThruster = false;
+
+        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f)
         {
             //if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)
             if (movementController.movementCatcher[j+1] == 1 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
@@ -110,7 +139,8 @@ public class SpaceCraft : MonoBehaviour
                 isLeft = false; isUp = false;
 
                 movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
-                print("Going rigth for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+                //print("Going rigth for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+
             }
             else if (movementController.movementCatcher[j+1] == 2 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
             {
@@ -119,7 +149,7 @@ public class SpaceCraft : MonoBehaviour
                 isRight = false; isUp = false;
 
                 movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
-                print("Going left for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+                //print("Going left for " + movementController.holdDownTime[j+1].ToString() + " seconds");
             }
             //else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && player.transform.position.y < maxValue && isUp)
             else if (movementController.movementCatcher[j+1] == 3 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
@@ -131,7 +161,7 @@ public class SpaceCraft : MonoBehaviour
                 isRight = false; isLeft = false;
 
                 movementController.holdDownTime[j+1] -= Time.deltaTime; // decrase the timer for each force action
-                print("Going up for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+                //print("Going up for " + movementController.holdDownTime[j+1].ToString() + " seconds");
             }
         }
 
@@ -150,15 +180,14 @@ public class SpaceCraft : MonoBehaviour
             if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 isCounterMove = true; // make the counter move available if velocity is zero out of the border
         }
-
+        print(p_RigidBody.velocity.x);
         if (movementController.holdDownTime[j+1] < 0.01f && (!isUp || !isRight || !isLeft) && !isFinished) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
             j++;
             //movementController.holdDownTime[j+1] = movementController.holdDownTime[j+1];
             // movementController.movementCatcher[j] = movementType; // this can be implemented to have less reference from another class
-            print("poop");
-            
+
             toGo = true;
             idleLoadTransition = true;
         }
@@ -175,7 +204,7 @@ public class SpaceCraft : MonoBehaviour
             
         }
 
-        if (!isFinished && Mathf.Abs(player.transform.position.x) > 1.7f)
+        if (!isFinished && Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
         { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
             if (player.transform.position.x < -1.7f) // if left border exceeds
                 transform.Translate(Vector2.right * 0.5f * Time.deltaTime);
