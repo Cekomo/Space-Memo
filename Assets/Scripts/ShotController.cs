@@ -135,7 +135,7 @@ public class ShotController : MonoBehaviour
     //}
 
     void OnCollisionEnter2D(Collision2D collision)
-    {        
+    {    
         // if the rocket hits a rock, destroy the rocket and the object collided
         Destroy(collision.collider.gameObject);
         Destroy(rocket); // it seems there is no problem

@@ -13,6 +13,9 @@ public class SpaceCraft : MonoBehaviour
     private GameObject thrusterLeft; // it represents left thruster flame
     private GameObject thrusterMid; // it represents middle thruster flame
     private GameObject thrusterRight; // it represents right thruster flame
+    
+    private GameObject blastOff; // it represents the blast after spacecraft collision
+    private float clock; // timer to deactivate explosion effect
 
     public Camera mainCamera; // gameobject to represent camera
     //public Camera finishCamera; // this activates when the view needs to stop
@@ -78,8 +81,9 @@ public class SpaceCraft : MonoBehaviour
         mainCamera = gameObject.GetComponent<Camera>();
 
         thrusterLeft = player.transform.GetChild(0).gameObject; // reference to represent the thruster flame left
-        thrusterMid = player.transform.GetChild(1).gameObject; ; // reference to represent the thruster flame mid
-        thrusterRight = player.transform.GetChild(2).gameObject; ; // reference to represent the thruster flame right
+        thrusterMid = player.transform.GetChild(1).gameObject; // reference to represent the thruster flame mid
+        thrusterRight = player.transform.GetChild(2).gameObject; // reference to represent the thruster flame right
+        blastOff = player.transform.GetChild(3).gameObject;
     }
 
     void FixedUpdate()
@@ -180,7 +184,7 @@ public class SpaceCraft : MonoBehaviour
             if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 isCounterMove = true; // make the counter move available if velocity is zero out of the border
         }
-        print(p_RigidBody.velocity.x);
+
         if (movementController.holdDownTime[j+1] < 0.01f && (!isUp || !isRight || !isLeft) && !isFinished) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
@@ -228,6 +232,17 @@ public class SpaceCraft : MonoBehaviour
             //mainCamera.enabled = false;
             //finishCamera.enabled = true;
         }
+
+
+        if (isFinished) // GetComponent2D<Sprite>()
+        {
+            clock += Time.deltaTime;
+            if (clock > 2f)
+            {
+                blastOff.SetActive(false);
+                clock = 0f;
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -237,6 +252,7 @@ public class SpaceCraft : MonoBehaviour
             isFinished = true;
             sr.enabled = false;
             p_RigidBody.bodyType = RigidbodyType2D.Static; // to stop the object and the camera to stop the view
+            blastOff.SetActive(true); // set blast variable true to animate the explosion
         }
     }
 }
