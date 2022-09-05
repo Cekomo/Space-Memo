@@ -45,6 +45,7 @@ public class SpaceCraft : MonoBehaviour
     private SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
+    private bool preStart; // represents the time after play button is activated
     //private bool isThruster; // determine if the thruster launches
     public int maxValue; // sets upper border
     
@@ -64,8 +65,11 @@ public class SpaceCraft : MonoBehaviour
     {
         idleLoadTransition = false; // false means the system work on load
         toGo = true;
+        preStart = false;
         //isThruster = false; 
         
+        clock = 2f; // it initially represent pre-movement of spaceship's stopping period
+
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
         //idleClock = movementController.idleTime[j];
@@ -97,6 +101,7 @@ public class SpaceCraft : MonoBehaviour
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
+        print(player.transform.position.y);
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
         //        startPos = Input.touches[0].position;
@@ -115,24 +120,35 @@ public class SpaceCraft : MonoBehaviour
         //    print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
         //}
 
-        // i will adjust the active position of thruster flames
-        if (!isFinished || player.transform.position.y > maxValue)
-        { // activate if there is a force
+        if (currentVelocity > 0f) // flames are active if the velocity is greater than 0 (ship is moving)
+        {
             thrusterLeft.SetActive(true);
             thrusterMid.SetActive(true);
             thrusterRight.SetActive(true);
         }
-        else
-        { // deactivate if there is no force
+        else if (currentVelocity == 0f && player.transform.position.y >= -3.25f)
+        {
             thrusterLeft.SetActive(false);
             thrusterMid.SetActive(false);
             thrusterRight.SetActive(false);
         }
 
-        //if (!isFinished) // lock the thruster if isFinished is true
-        //    isThruster = true;
-        //else 
-        //    isThruster = false;
+        if (player.transform.position.y < -3.5f) 
+        {
+            transform.Translate(Vector2.up * clock * Time.deltaTime);
+            thrusterLeft.SetActive(true);
+            thrusterMid.SetActive(true);
+            thrusterRight.SetActive(true);
+        }
+        else if (currentVelocity == 0f && clock > 0.01f)// stop the flame if it reaches -3.2 for beginning
+        {
+            clock = clock * 0.97f;
+            transform.Translate(Vector2.up * clock * Time.deltaTime); // if the border is exceeded, decrease the speed
+            thrusterLeft.SetActive(false);
+            thrusterMid.SetActive(false);
+            thrusterRight.SetActive(false);
+        }
+            
 
         if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f)
         {
@@ -200,14 +216,16 @@ public class SpaceCraft : MonoBehaviour
         if (idleLoadTransition && !isFinished) // wait until idle time in queue is over
             movementController.idleTime[k+1] -= Time.deltaTime;
 
-        if (movementController.idleTime[k+1] < 0.01f && !isFinished) // hand queue over to holding operation
+        try // this function gives error when idle time finishes
         {
-            idleLoadTransition = false;
-
-            k++;
-            //idleClock = movementController.idleTime[k]; // check if indexing works
-            
+            if (movementController.idleTime[k + 1] < 0.01f && !isFinished) // hand queue over to holding operation
+            {
+                idleLoadTransition = false;
+                k++;
+                //idleClock = movementController.idleTime[k]; // check if indexing works
+            }
         }
+        catch { }
 
         if (!isFinished && Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
         { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
@@ -235,15 +253,15 @@ public class SpaceCraft : MonoBehaviour
         }
 
 
-        if (isFinished) // GetComponent2D<Sprite>()
-        {
-            clock += Time.deltaTime;
-            if (clock > 1.8f)
-            {
-                blastOff.SetActive(false);
-                clock = 0f;
-            }
-        }
+        //if (isFinished) // GetComponent2D<Sprite>()
+        //{
+        //    clock += Time.deltaTime;
+        //    if (clock > 1.8f)
+        //    {
+        //        blastOff.SetActive(false);
+        //        clock = 0f;
+        //    }
+        //}
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -254,6 +272,7 @@ public class SpaceCraft : MonoBehaviour
             sr.enabled = false;
             p_RigidBody.bodyType = RigidbodyType2D.Static; // to stop the object and the camera to stop the view
             blastOff.SetActive(true); // set blast variable true to animate the explosion
+            currentVelocity = 0; // velocity resets if the ships collides
         }
     }
 }

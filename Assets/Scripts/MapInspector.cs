@@ -34,7 +34,7 @@ public class MapInspector : MonoBehaviour
         rocketButton.gameObject.SetActive(false); // at inspector, rocket button should not be visible
 
         sr = spaceCraft.player.GetComponent<SpriteRenderer>();
-        sr.enabled = false; // do not show the spacecraft for the map inspection
+        //sr.enabled = false; // do not show the spacecraft for the map inspection
 
         //GetComponentInChildren<Button>().restartSign.image.enabled = false; // restart pops up after slider is at the end
     }
@@ -143,7 +143,7 @@ public class MapInspector : MonoBehaviour
         spaceCraft.isFinished = false;
 
         // lock the camera at the beginning to start
-        sr.enabled = true; // show the spacecraft to start
+        //sr.enabled = true; // show the spacecraft to start
         GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // reset the position of camera
     }
 }
