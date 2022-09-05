@@ -57,6 +57,7 @@ public class SpaceCraft : MonoBehaviour
     void Awake() { maxValue = 32; }
 
 
+    // spacecraft initial condidition is y: -3.2f
     // references brokes the system but the principle works as a general concept
     // camera does not stop after the game finishes
     void Start()
@@ -237,7 +238,7 @@ public class SpaceCraft : MonoBehaviour
         if (isFinished) // GetComponent2D<Sprite>()
         {
             clock += Time.deltaTime;
-            if (clock > 2f)
+            if (clock > 1.8f)
             {
                 blastOff.SetActive(false);
                 clock = 0f;
