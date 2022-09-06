@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
 
     private Vector2 startPos; // pressDown point
 
+
     private int screenX = Screen.width; // to determine swipe action on x-axis
     private int screenY = Screen.height; // to determine swipe action on y-axis 
 
@@ -38,7 +39,7 @@ public class MovementController : MonoBehaviour
         k = 0;
     }
 
-    // Update is called once per frame
+    // isRecordings were all isFinished
     void Update()
     {
         if (Input.touchCount > 0) // to handle index out of bound error
@@ -47,19 +48,19 @@ public class MovementController : MonoBehaviour
 
         if (Input.touchCount > 0)
         { // 1: go right, 2: go left, 3: go up
-            if (Input.touches[0].position.x - startPos.x >= screenX / 5 && spaceCraft.isRightLeft && isRight && spaceCraft.isFinished)
+            if (Input.touches[0].position.x - startPos.x >= screenX / 5 && spaceCraft.isRightLeft && isRight && spaceCraft.isRecording)
             {
                 movementCatcher[k] = 1;
 
                 isLeft = false; isUp = false;
             }
-            else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && spaceCraft.isRightLeft && isLeft && spaceCraft.isFinished)
+            else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && spaceCraft.isRightLeft && isLeft && spaceCraft.isRecording)
             { 
                 movementCatcher[k] = 2;
 
                 isRight = false; isUp = false;
             }
-            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp && spaceCraft.isFinished)
+            else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp && spaceCraft.isRecording)
             { // trigger if swipe is along one sixth the screen
                 movementCatcher[k] = 3;
 
@@ -68,18 +69,18 @@ public class MovementController : MonoBehaviour
             }
         }
 
-        if ((!isLeft || !isRight || !isUp) && spaceCraft.isFinished)
+        if ((!isLeft || !isRight || !isUp) && spaceCraft.isRecording)
         { // to count holding down time for go up/left/right
             holdDownClock += Time.deltaTime;
         }
 
-        if (spaceCraft.isRightLeft && isLeft && isRight && isUp && spaceCraft.isFinished)
+        if (spaceCraft.isRightLeft && isLeft && isRight && isUp && spaceCraft.isRecording)
         { // to count the time when there is no screen touching
             idleClock += Time.deltaTime;
         }
 
         // !!first element is passed as unassigned!!
-        if (Input.touchCount == 0 && (!isUp || !isRight || !isLeft) && spaceCraft.isFinished) // to make them all true for the next move
+        if (Input.touchCount == 0 && (!isUp || !isRight || !isLeft) && spaceCraft.isRecording) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
             holdDownTime[k] = holdDownClock;
@@ -87,7 +88,7 @@ public class MovementController : MonoBehaviour
             k++;
         }
 
-        if (Input.touchCount > 0 && spaceCraft.isRightLeft && spaceCraft.isFinished)
+        if (Input.touchCount > 0 && spaceCraft.isRightLeft && spaceCraft.isRecording)
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 //print(k);

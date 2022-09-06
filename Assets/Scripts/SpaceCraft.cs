@@ -13,6 +13,7 @@ public class SpaceCraft : MonoBehaviour
     private GameObject thrusterLeft; // it represents left thruster flame
     private GameObject thrusterMid; // it represents middle thruster flame
     private GameObject thrusterRight; // it represents right thruster flame
+    [HideInInspector] public GameObject[] obstacles; // represents all obstacles in the map
     
     private GameObject blastOff; // it represents the blast after spacecraft collision
     private float clock; // timer to deactivate explosion effect
@@ -45,7 +46,8 @@ public class SpaceCraft : MonoBehaviour
     private SpriteRenderer sr; // sprite indicator to disable the spacecraft image
 
     [HideInInspector] public bool isFinished; // to determine if the game is finished
-    private bool preStart; // represents the time after play button is activated
+    [HideInInspector] public bool preStart; // represents the time after play button is activated
+    [HideInInspector] public bool isRecording; // to record the actions for spacecraft
     //private bool isThruster; // determine if the thruster launches
     public int maxValue; // sets upper border
     
@@ -63,6 +65,8 @@ public class SpaceCraft : MonoBehaviour
     // camera does not stop after the game finishes
     void Start()
     {
+        isRecording = false; // initially false (until start button is triggered)
+
         idleLoadTransition = false; // false means the system work on load
         toGo = true;
         preStart = false;
@@ -80,6 +84,9 @@ public class SpaceCraft : MonoBehaviour
         
         //isLeft = false; isRight = false; 
         isRightLeft = false; isCounterMove = false;
+
+        // determine the obstacles
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
 
         p_RigidBody = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -101,7 +108,6 @@ public class SpaceCraft : MonoBehaviour
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
-        print(player.transform.position.y);
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
         //        startPos = Input.touches[0].position;
@@ -119,7 +125,8 @@ public class SpaceCraft : MonoBehaviour
         //    print("time "+movementController.holdDownTime[j + 1].ToString());
         //    print("movementcatcher "+ (j + 1).ToString() + " " + movementController.movementCatcher[j + 1].ToString());
         //}
-
+        
+        // ---------------- part after recording finishes ----------------
         if (currentVelocity > 0f) // flames are active if the velocity is greater than 0 (ship is moving)
         {
             thrusterLeft.SetActive(true);
@@ -133,14 +140,14 @@ public class SpaceCraft : MonoBehaviour
             thrusterRight.SetActive(false);
         }
 
-        if (player.transform.position.y < -3.5f) 
+        if (player.transform.position.y < -3.5f && preStart) 
         {
             transform.Translate(Vector2.up * clock * Time.deltaTime);
             thrusterLeft.SetActive(true);
             thrusterMid.SetActive(true);
             thrusterRight.SetActive(true);
         }
-        else if (currentVelocity == 0f && clock > 0.01f)// stop the flame if it reaches -3.2 for beginning
+        else if (currentVelocity == 0f && clock > 0.01f && preStart)// stop the flame if it reaches -3.2 for beginning
         {
             clock = clock * 0.97f;
             transform.Translate(Vector2.up * clock * Time.deltaTime); // if the border is exceeded, decrease the speed
@@ -148,7 +155,56 @@ public class SpaceCraft : MonoBehaviour
             thrusterMid.SetActive(false);
             thrusterRight.SetActive(false);
         }
+        
+        if (clock < 0.01f) // to block the system to go inside statements above unnecessarily
+            preStart = false;
+        // ----------------------------------------------------------------
+
+        // ---------------- part occuring while isRecording is true ----------------
+        if (isRecording)
+        {               
             
+            if (Input.touchCount > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    startPos = Input.touches[0].position;
+
+                if (Input.touches[0].position.x - startPos.x >= screenX / 5 && isRightLeft && isRight)
+                {
+                    p_RigidBody.AddForce(transform.right * moveSpeed / 2);
+                }
+                else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && isRightLeft && isLeft)
+                {
+                    p_RigidBody.AddForce(transform.right * -moveSpeed / 2);
+                }
+                else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp)
+                {
+                    p_RigidBody.AddForce(transform.up * moveSpeed / 3);
+                }
+            }
+
+            if (Mathf.Abs(player.transform.position.x) > 1.7f) // discard !isFinished by controllin
+            {
+                speedFading = p_RigidBody.velocity.x * 0.96f; // speed decreases cumulatively (multiplied with 0.96  continuously)
+                p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
+                                                                                  //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
+                                                                                  //isRight = false; isLeft = false;
+                //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
+                //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
+            }
+
+            if (Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
+            { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
+                if (player.transform.position.x < -1.7f) // if left border exceeds
+                    transform.Translate(Vector2.right * 0.5f * Time.deltaTime);
+                else if (player.transform.position.x > 1.7f) // if right border exceeds
+                    transform.Translate(Vector2.right * -0.5f * Time.deltaTime);
+
+                //if (Mathf.Abs(player.transform.position.x) < 1.7f)
+                //    isCounterMove = false; // turning back lasts until coordinate < |1.7f|
+            }
+        }
+        // --------------------------------------------------------------------------
 
         if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f)
         {
@@ -241,6 +297,7 @@ public class SpaceCraft : MonoBehaviour
         if (player.transform.position.y > maxValue && !isFinished) // Y: 32 is the maximum vertical distance for map
         { 
             isFinished = true;
+            isRecording = false; // when map is finished for the first time, complete recording period
 
             // this functions were needed where finishcamera replaced the main camera
             // if spacecraft exceeds the border, switch the camera to stop the view
@@ -251,7 +308,6 @@ public class SpaceCraft : MonoBehaviour
             //mainCamera.enabled = false;
             //finishCamera.enabled = true;
         }
-
 
         //if (isFinished) // GetComponent2D<Sprite>()
         //{

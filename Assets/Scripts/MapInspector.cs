@@ -145,5 +145,15 @@ public class MapInspector : MonoBehaviour
         // lock the camera at the beginning to start
         //sr.enabled = true; // show the spacecraft to start
         GetComponent<Camera>().transform.position = new Vector3(0f, 0f, -5f); // reset the position of camera
+
+        // adjust the variable as true to bring the spacecraft inside screen and omit the obstacles
+        spaceCraft.preStart = true;
+
+        for (int i = 0; i < spaceCraft.obstacles.Length; i++)
+        {
+            spaceCraft.obstacles[i].SetActive(false);
+        }
+
+        spaceCraft.isRecording = true; // record the actions when start button is triggered
     }
 }
