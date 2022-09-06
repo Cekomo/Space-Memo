@@ -64,6 +64,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 68
       Script: {instanceID: 0}
+    - Class: 70
+      Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
