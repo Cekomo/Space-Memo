@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class MapInspector : MonoBehaviour
 {
     public SpaceCraft spaceCraft;
-    
+    public ControlPanel controlPanel;
+
     public Slider mapSlider;
     [SerializeField] Button playButton; // the button that manipulates slider
     [SerializeField] Button startButton; // the button that starts the record
@@ -142,12 +143,16 @@ public class MapInspector : MonoBehaviour
             moveEnd = false;
     }
 
-    public void StartPlay()
+    public void StartPlay() // newly record play
     {
         // deactivate inspector buttons and activate rocket to start the record
         playButton.gameObject.SetActive(false);
         mapSlider.gameObject.SetActive(false);
-        rocketButton.gameObject.SetActive(true);
+        //rocketButton.gameObject.SetActive(true);
+        
+        // make the playback button visible but deactivated
+        controlPanel.playBackButton.gameObject.SetActive(true);
+        controlPanel.playBackButton.enabled = false;
 
         spaceCraft.isFinished = false;
 

@@ -10,7 +10,6 @@
 -a="C:\Users\cemil\Space-Memo\Library\PlayerScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll"
 -a="C:\Users\cemil\Space-Memo\Library\PlayerScriptAssemblies\Unity.2D.Animation.Runtime.dll"
 -a="C:\Users\cemil\Space-Memo\Library\PlayerScriptAssemblies\Unity.2D.Common.Runtime.dll"
--a="C:\Users\cemil\Space-Memo\Library\PlayerScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll"
 -a="C:\Users\cemil\Space-Memo\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\AOT\Newtonsoft.Json.dll"
 -a="C:\Users\cemil\Space-Memo\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Portable\Newtonsoft.Json.dll"
 -a="C:\Users\cemil\Space-Memo\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll"

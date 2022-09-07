@@ -17,6 +17,7 @@ public class SpaceCraft : MonoBehaviour
     
     private GameObject blastOff; // it represents the blast after spacecraft collision
     private float clock; // timer to deactivate explosion effect
+    private float waitClock; // timer to wait the ship until it comes its position
 
     public Camera mainCamera; // gameobject to represent camera
     //public Camera finishCamera; // this activates when the view needs to stop
@@ -73,6 +74,7 @@ public class SpaceCraft : MonoBehaviour
         //isThruster = false; 
         
         clock = 2f; // it initially represent pre-movement of spaceship's stopping period
+        waitClock = 0f;
 
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
@@ -109,6 +111,8 @@ public class SpaceCraft : MonoBehaviour
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
+        print(currentVelocity); // !!!when forcing up merges with border exceed, vertical speed is boosted!!!
+        
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
         //        startPos = Input.touches[0].position;
@@ -163,8 +167,10 @@ public class SpaceCraft : MonoBehaviour
 
         // ---------------- part functioning while isRecording is true ----------------
         if (isRecording)
-        {               
-            if (Input.touchCount > 0)
+        {
+            if (waitClock <= 2f) waitClock += Time.deltaTime; // do not allow moving until required time is passed
+
+            if (Input.touchCount > 0 && waitClock > 2f)
             {
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                     startPos = Input.touches[0].position;
