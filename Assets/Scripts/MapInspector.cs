@@ -20,7 +20,7 @@ public class MapInspector : MonoBehaviour
 
     [HideInInspector] public bool moveEnd; // go towards maxValue when play button is pressed
     private float slideDistance; // distance between camera and pointed value by slider
-    //private bool isClicked; // to determine if sldier is clicked or not
+    private bool onLine; // to determine if playbutton is touched or not
     private SpriteRenderer sr;
 
     private Image img;
@@ -64,7 +64,10 @@ public class MapInspector : MonoBehaviour
                 //spaceCraft.mainCamera.transform.Translate(Vector2.up * mapSlider.value * Time.deltaTime);
             }
         else // stop if the handle is moving
+        {
             mapSlider.value = mapSlider.value;
+            onLine = false; // false if handle stops or it reaches the max value
+        }
         
         slideDistance = mapSlider.value - cameraPos.y;
         //print(slideDistance);
@@ -75,6 +78,7 @@ public class MapInspector : MonoBehaviour
     { // i ignored the background movement for now
         // printing inside the function affects speed of background??
         slideDistance = mapSlider.value - cameraPos.y; // calculate it to determine how much unit to go
+
         if (slideDistance < -0.01f)
         {
             moveEnd = true;
@@ -98,6 +102,9 @@ public class MapInspector : MonoBehaviour
             //isClicked = false;
         }
 
+        if (Mathf.Abs(slideDistance) < 0.01f && !onLine) // 
+            moveEnd = false;
+
         //if (!spaceCraft.isFinished) // if the game starts, disable the quick-start button
         //    startButton.gameObject.SetActive(false);
         //else if (mapSlider.value == spaceCraft.maxValue)
@@ -117,6 +124,8 @@ public class MapInspector : MonoBehaviour
 
     public void Replay() // function to show the map and start the game
     { // !!this function can broke the code due to changes!! ----------------
+        onLine = true;
+        
         if (mapSlider.value == spaceCraft.maxValue)
         {
             mapSlider.value = 0; // reset the slider value if the button is pressed at max
