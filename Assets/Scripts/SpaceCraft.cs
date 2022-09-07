@@ -83,7 +83,8 @@ public class SpaceCraft : MonoBehaviour
         currentVelocity = 0f; // velocity of spacecraft
         
         //isLeft = false; isRight = false; 
-        isRightLeft = false; isCounterMove = false;
+        isRightLeft = false; 
+        isCounterMove = false; // it blocks the horizontal movement ability when the borders (x-axis) are excededed
 
         // determine the obstacles
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
@@ -160,27 +161,36 @@ public class SpaceCraft : MonoBehaviour
             preStart = false;
         // ----------------------------------------------------------------
 
-        // ---------------- part occuring while isRecording is true ----------------
+        // ---------------- part functioning while isRecording is true ----------------
         if (isRecording)
         {               
-            
             if (Input.touchCount > 0)
             {
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                     startPos = Input.touches[0].position;
 
-                if (Input.touches[0].position.x - startPos.x >= screenX / 5 && isRightLeft && isRight)
+                if (Input.touches[0].position.x - startPos.x >= screenX / 5 && isRightLeft && isRight && !isCounterMove)
                 {
                     p_RigidBody.AddForce(transform.right * moveSpeed / 2);
+                    isUp = false; isLeft = false;
                 }
-                else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && isRightLeft && isLeft)
+                else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && isRightLeft && isLeft && !isCounterMove)
                 {
                     p_RigidBody.AddForce(transform.right * -moveSpeed / 2);
+                    isUp = false; isRight = false;
                 }
                 else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp)
                 {
+                    currentVelocity = p_RigidBody.velocity.magnitude;
                     p_RigidBody.AddForce(transform.up * moveSpeed / 3);
+                    isLeft = false; isRight = false;
+                    isRightLeft = true;   
                 }
+            }
+
+            if ((!isUp || !isRight || !isLeft) && Input.touchCount == 0)
+            {
+                isUp = true; isLeft = true; isRight = true;
             }
 
             if (Mathf.Abs(player.transform.position.x) > 1.7f) // discard !isFinished by controllin
@@ -193,20 +203,22 @@ public class SpaceCraft : MonoBehaviour
                 //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
             }
 
-            if (Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
-            { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
+            if (Mathf.Abs(player.transform.position.x) > 1.68f) // if the spacecraft exceeds the border on x-axis, turn back inside of the border
+            {
+                isCounterMove = true; // to prevent forcing to exceed borders while pressin down to move left or right
+                
                 if (player.transform.position.x < -1.7f) // if left border exceeds
                     transform.Translate(Vector2.right * 0.5f * Time.deltaTime);
                 else if (player.transform.position.x > 1.7f) // if right border exceeds
                     transform.Translate(Vector2.right * -0.5f * Time.deltaTime);
 
-                //if (Mathf.Abs(player.transform.position.x) < 1.7f)
-                //    isCounterMove = false; // turning back lasts until coordinate < |1.7f|
+                if (Mathf.Abs(player.transform.position.x) < 1.7f)
+                    isCounterMove = false; // turning back lasts until coordinate < |1.7f|
             }
         }
         // --------------------------------------------------------------------------
 
-        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f)
+        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f && !isRecording)
         {
             //if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)
             if (movementController.movementCatcher[j+1] == 1 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)
@@ -248,17 +260,18 @@ public class SpaceCraft : MonoBehaviour
             //movementController.holdDownTime[j] = 0f; // this can not be implemented since it brokes balance of timing
         }
 
-        if (movementController.holdDownTime[j+1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished) // discard !isFinished by controllin
+        if (movementController.holdDownTime[j+1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished && !isRecording) // discard !isFinished by controllin
         {
             speedFading = p_RigidBody.velocity.x * 0.96f; // speed decreases cumulatively (multiplied with 0.96  continuously)
             p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
             //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
             //isRight = false; isLeft = false;
-            if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
-                isCounterMove = true; // make the counter move available if velocity is zero out of the border
+            
+            //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
+            //isCounterMove = true; // make the counter move available if velocity is zero out of the border
         }
 
-        if (movementController.holdDownTime[j+1] < 0.01f && (!isUp || !isRight || !isLeft) && !isFinished) // to make them all true for the next move
+        if (movementController.holdDownTime[j+1] < 0.01f && (!isUp || !isRight || !isLeft) && !isFinished && !isRecording) // to make them all true for the next move
         {
             isUp = true; isLeft = true; isRight = true;
             j++;
@@ -274,7 +287,7 @@ public class SpaceCraft : MonoBehaviour
 
         try // this function gives error when idle time finishes
         {
-            if (movementController.idleTime[k + 1] < 0.01f && !isFinished) // hand queue over to holding operation
+            if (movementController.idleTime[k + 1] < 0.01f && !isFinished && !isRecording) // hand queue over to holding operation
             {
                 idleLoadTransition = false;
                 k++;
@@ -283,7 +296,7 @@ public class SpaceCraft : MonoBehaviour
         }
         catch { }
 
-        if (!isFinished && Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
+        if (!isFinished && !isRecording && Mathf.Abs(player.transform.position.x) > 1.7f) // Mathf.Abs(player.transform.position.x) > 1.7f
         { // if the spacecraft exceeds the border on x-axis, turn back inside of the border
             if (player.transform.position.x < -1.7f) // if left border exceeds
                 transform.Translate(Vector2.right * 0.5f * Time.deltaTime);

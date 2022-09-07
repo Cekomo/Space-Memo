@@ -16,9 +16,11 @@ public class BackGround : MonoBehaviour
     {
         bg_Rigidbody = GetComponent<Rigidbody2D>();
     }
-    
+
+    // ------------------------- currently NOT used -------------------------
     void Update()
     {
+        print(spaceCraft.isFinished);
         if (!spaceCraft.isFinished) // background moves with respect to the velocity of spacecraft      
             transform.Translate(Vector2.up * (spaceCraft.currentVelocity * 0.7f) * Time.deltaTime);
 
@@ -37,8 +39,8 @@ public class BackGround : MonoBehaviour
 
         // below statement adjust the background while sliding after finger up
         if (!mapInspector.moveEnd && transform.position.y != mapInspector.mapSlider.value)
-            transform.position = new Vector3(0.06f, mapInspector.mapSlider.value+5.5f, 0f);
-        
+            transform.position = new Vector3(0.06f, mapInspector.mapSlider.value + 5.5f, 0f);
+
     }
 }
 

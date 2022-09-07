@@ -19,8 +19,8 @@ public class ControlPanel : MonoBehaviour
     void Start()
     {
         sliderMax = spaceCraft.maxValue;
-        print(playGameButton.gameObject.transform.GetChild(0));
-        print(playGameButton.gameObject.transform.GetChild(1));
+        //print(playGameButton.gameObject.transform.GetChild(0));
+        //print(playGameButton.gameObject.transform.GetChild(1));
 
         rocketButton.gameObject.SetActive(false); // rocketButton deactivated at inspector mode
     }

@@ -42,6 +42,8 @@ public class MovementController : MonoBehaviour
     // isRecordings were all isFinished
     void Update()
     {
+        //print(spaceCraft.isFinished);
+        
         if (Input.touchCount > 0) // to handle index out of bound error
             if (Input.GetTouch(0).phase == TouchPhase.Began)
                 startPos = Input.touches[0].position;
