@@ -16,7 +16,7 @@ public class SpaceCraft : MonoBehaviour
     [HideInInspector] public GameObject[] obstacles; // represents all obstacles in the map
     
     private GameObject blastOff; // it represents the blast after spacecraft collision
-    private float clock; // timer to deactivate explosion effect
+    [HideInInspector] public float clock; // timer to deactivate explosion effect
     private float waitClock; // timer to wait the ship until it comes its position
 
     public Camera mainCamera; // gameobject to represent camera
@@ -60,7 +60,6 @@ public class SpaceCraft : MonoBehaviour
 
     void Awake() { maxValue = 32; }
 
-
     // spacecraft initial condidition is y: -3.2f
     // references brokes the system but the principle works as a general concept
     // camera does not stop after the game finishes
@@ -72,9 +71,6 @@ public class SpaceCraft : MonoBehaviour
         toGo = true;
         preStart = false;
         //isThruster = false; 
-        
-        clock = 2f; // it initially represent pre-movement of spaceship's stopping period
-        waitClock = 0f;
 
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
@@ -111,7 +107,7 @@ public class SpaceCraft : MonoBehaviour
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
-        print(currentVelocity); // !!!when forcing up merges with border exceed, vertical speed is boosted!!!
+        //print(currentVelocity); // !!!when forcing up merges with border exceed, vertical speed is boosted!!!
         
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
@@ -154,6 +150,7 @@ public class SpaceCraft : MonoBehaviour
         }
         else if (currentVelocity == 0f && clock > 0.01f && preStart)// stop the flame if it reaches -3.2 for beginning
         {
+            //print("zort");
             clock = clock * 0.97f;
             transform.Translate(Vector2.up * clock * Time.deltaTime); // if the border is exceeded, decrease the speed
             thrusterLeft.SetActive(false);
@@ -161,16 +158,18 @@ public class SpaceCraft : MonoBehaviour
             thrusterRight.SetActive(false);
         }
         
+        // adjust clock properly
         if (clock < 0.01f) // to block the system to go inside statements above unnecessarily
             preStart = false;
-        // ----------------------------------------------------------------
 
+        // ----------------------------------------------------------------
+        print(currentVelocity);
         // ---------------- part functioning while isRecording is true ----------------
         if (isRecording)
         {
-            if (waitClock <= 2f) waitClock += Time.deltaTime; // do not allow moving until required time is passed
+            // isrigthleft does not work properly
 
-            if (Input.touchCount > 0 && waitClock > 2f)
+            if (Input.touchCount > 0 && !preStart) 
             {
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                     startPos = Input.touches[0].position;
@@ -224,7 +223,7 @@ public class SpaceCraft : MonoBehaviour
         }
         // --------------------------------------------------------------------------
 
-        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f && !isRecording)
+        if (movementController.holdDownTime[j+1] > 0.01f && !isFinished && Mathf.Abs(player.transform.position.x) < 1.7f && !isRecording && !preStart)
         {
             //if (Input.touches[0].position.x - startPos.x >= screenX / 5 && player.transform.position.x < 1.7f && isRightLeft && isRight)
             if (movementController.movementCatcher[j+1] == 1 && movementController.holdDownTime[j + 1] > 0 && !idleLoadTransition)

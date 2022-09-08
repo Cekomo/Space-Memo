@@ -8,7 +8,6 @@ public class MovementController : MonoBehaviour
 
     private Vector2 startPos; // pressDown point
 
-
     private int screenX = Screen.width; // to determine swipe action on x-axis
     private int screenY = Screen.height; // to determine swipe action on y-axis 
 

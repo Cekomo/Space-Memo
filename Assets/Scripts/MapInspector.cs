@@ -40,7 +40,7 @@ public class MapInspector : MonoBehaviour
         //GetComponentInChildren<Button>().restartSign.image.enabled = false; // restart pops up after slider is at the end
     }
 
-    // Update is called once per frame
+    // !!!! it brokes the record if record button is pressed while the handle is moving !!!!
     void Update()
     {
         //print(mapSlider.value);
@@ -169,5 +169,6 @@ public class MapInspector : MonoBehaviour
         }
 
         spaceCraft.isRecording = true; // record the actions when start button is triggered
+        spaceCraft.clock = 3; 
     }
 }

@@ -29,7 +29,7 @@ public class ControlPanel : MonoBehaviour
     
     void Update()
     {
-        print(spaceCraft.isFinished);
+
         if (mapSlide.value == sliderMax)
         {
             // when slider is at max, deactivate play sign and activate restart sign
@@ -50,13 +50,10 @@ public class ControlPanel : MonoBehaviour
         }
         else
         {
-            if (spaceCraft.player.transform.position.y > spaceCraft.maxValue)
-            {
+            if (spaceCraft.player.transform.position.y > spaceCraft.maxValue)           
                 playBackButton.enabled = true;
-            }
-        }
-        
-
+            
+        }    
     }
     
     public void RestartGame() // to restart the game when pressed button
@@ -74,12 +71,19 @@ public class ControlPanel : MonoBehaviour
 
     public void PlayBackButton()
     {
+        playBackButton.gameObject.SetActive(false);
+        rocketButton.gameObject.SetActive(true); // activate rocket button to launch rocket simulatenously with record
+
         spaceCraft.isFinished = false; // activate auto play 
+        spaceCraft.isRecording = false; // to deactivate recording movement part
 
         spaceCraft.player.transform.position = new Vector3(0f, -6.5f, -4f); // bring the ship to its initial position
-        spaceCraft.preStart = true;
-        rocketButton.gameObject.SetActive(true);
+        spaceCraft.p_RigidBody.velocity = new Vector2(0f, 0f);
 
-        playBackButton.gameObject.SetActive(false);
+        GetComponent<Camera>().transform.position = new Vector3(0, 0, -5);
+
+        spaceCraft.preStart = true;
+        spaceCraft.clock = 3; // it initially represent pre-movement of spaceship's stopping period
+        spaceCraft.currentVelocity = 0; // reset it to detect speed for the record session
     }
 }
