@@ -57,7 +57,7 @@ public class SpaceCraft : MonoBehaviour
     //private float holdDownClock; // to count holding down time for each element of holdDownTime
     //private float idleClock; // to count the idle time of the system in terms of touch input
     private bool idleLoadTransition; // boolean to swap between holddown and idle operations
-
+    private float timer;
     void Awake() { maxValue = 32; }
 
     // spacecraft initial condidition is y: -3.2f
@@ -107,14 +107,14 @@ public class SpaceCraft : MonoBehaviour
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
-        //print(currentVelocity); // !!!when forcing up merges with border exceed, vertical speed is boosted!!!
+        //print("currentvelocity: " + currentVelocity.ToString() + " velocity.y: " + p_RigidBody.velocity.y.ToString()); // !!!when forcing up merges with border exceed, vertical speed is boosted!!!
         
         //if (Input.touchCount > 0 && !isFinished) // to handle index out of bound error
         //    if (Input.GetTouch(0).phase == TouchPhase.Began) 
         //        startPos = Input.touches[0].position;
 
-        //if (!idleLoadTransition && !isFinished) print("Going " + movementController.movementCatcher[j] + " for " + movementController.holdDownTime[j+1].ToString() + " seconds");
-        //else if (idleLoadTransition && !isFinished) print("Being idle for " + idleClock.ToString() + " seconds.");
+        //if (!idleLoadTransition && !isFinished) print("Going " + movementController.movementCatcher[j+1] + " for " + movementController.holdDownTime[j+1].ToString() + " seconds");
+        //else if (idleLoadTransition && !isFinished) print("Being idle for " + movementController.holdDownTime[j+1].ToString() + " seconds.");
 
         //if (!isFinished)
         //    for (int i = 0; i < movementController.holdDownTime.Length; i++)
@@ -163,7 +163,7 @@ public class SpaceCraft : MonoBehaviour
             preStart = false;
 
         // ----------------------------------------------------------------
-        print(currentVelocity);
+
         // ---------------- part functioning while isRecording is true ----------------
         if (isRecording)
         {
@@ -178,37 +178,50 @@ public class SpaceCraft : MonoBehaviour
                 {
                     p_RigidBody.AddForce(transform.right * moveSpeed / 2);
                     isUp = false; isLeft = false;
+                    //timer += Time.deltaTime;
                 }
                 else if (Input.touches[0].position.x - startPos.x <= -screenX / 5 && isRightLeft && isLeft && !isCounterMove)
                 {
                     p_RigidBody.AddForce(transform.right * -moveSpeed / 2);
                     isUp = false; isRight = false;
+                    //timer += Time.deltaTime;
+                    
                 }
                 else if (Input.touches[0].position.y - startPos.y >= screenY / 6 && isUp)
                 {
                     currentVelocity = p_RigidBody.velocity.magnitude;
                     p_RigidBody.AddForce(transform.up * moveSpeed / 3);
                     isLeft = false; isRight = false;
-                    isRightLeft = true;   
+                    if (currentVelocity > 0) isRightLeft = true;
+                    //timer += Time.deltaTime;
+                    
                 }
             }
 
             if ((!isUp || !isRight || !isLeft) && Input.touchCount == 0)
             {
+                //if (isRight)
+                //    print("Going 1 for " + timer.ToString() + " seconds");
+                //else if (isLeft)
+                //    print("Going 2 for " + timer.ToString() + " seconds");
+                //else if (isUp)
+                //    print("Going 3 for " + timer.ToString() + " seconds");
+
                 isUp = true; isLeft = true; isRight = true;
+                timer = 0;
             }
 
             if (Mathf.Abs(player.transform.position.x) > 1.7f) // discard !isFinished by controllin
             {
-                speedFading = p_RigidBody.velocity.x * 0.96f; // speed decreases cumulatively (multiplied with 0.96  continuously)
-                p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
+                speedFading = p_RigidBody.velocity.x * 0.96f;
+                p_RigidBody.velocity = new Vector2(speedFading, p_RigidBody.velocity.y); 
                                                                                   //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
                                                                                   //isRight = false; isLeft = false;
                 //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
             }
 
-            if (Mathf.Abs(player.transform.position.x) > 1.68f) // if the spacecraft exceeds the border on x-axis, turn back inside of the border
+            if (Mathf.Abs(player.transform.position.x) > 1.7f) // if the spacecraft exceeds the border on x-axis, turn back inside of the border
             {
                 isCounterMove = true; // to prevent forcing to exceed borders while pressin down to move left or right
                 

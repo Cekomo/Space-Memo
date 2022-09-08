@@ -65,7 +65,7 @@ public class MovementController : MonoBehaviour
             { // trigger if swipe is along one sixth the screen
                 movementCatcher[k] = 3;
 
-                spaceCraft.isRightLeft = true; // start the array with upward movement
+                if (spaceCraft.currentVelocity > 0.05f) spaceCraft.isRightLeft = true; // start the array with upward movement
                 isLeft = false; isRight = false;
             }
         }
