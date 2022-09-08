@@ -97,11 +97,11 @@ public class SpaceCraft : MonoBehaviour
         blastOff = player.transform.GetChild(3).gameObject;
     }
 
-    void FixedUpdate()
+    void FixedUpdate() // spacecraft is shaking when camera movement is in update() function
     { 
-        // to adjust the speed of camera on y-axis
-        if (!isFinished && player.transform.position.y < maxValue) // spacecraft is shaking when camera movement is in update() function
-            Camera.main.transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);   
+        // statement the follow the player in action
+        if (player.transform.position.y < maxValue) 
+            Camera.main.transform.Translate(Vector2.up * p_RigidBody.velocity.y * Time.deltaTime);   
     }
 
     // it would be nice if border exceed is expressed with a reference
@@ -214,9 +214,8 @@ public class SpaceCraft : MonoBehaviour
             if (Mathf.Abs(player.transform.position.x) > 1.7f) // discard !isFinished by controllin
             {
                 speedFading = p_RigidBody.velocity.x * 0.96f;
-                p_RigidBody.velocity = new Vector2(speedFading, p_RigidBody.velocity.y); 
-                                                                                  //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
-                                                                                  //isRight = false; isLeft = false;
+                p_RigidBody.velocity = new Vector2(speedFading, p_RigidBody.velocity.y); // y-variable was currentVelocity
+            
                 //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
             }

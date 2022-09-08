@@ -74,6 +74,11 @@ public class ControlPanel : MonoBehaviour
         playBackButton.gameObject.SetActive(false);
         rocketButton.gameObject.SetActive(true); // activate rocket button to launch rocket simulatenously with record
 
+        for (int i = 0; i < spaceCraft.obstacles.Length; i++)
+        {
+            spaceCraft.obstacles[i].SetActive(true);
+        }
+
         spaceCraft.isFinished = false; // activate auto play 
         spaceCraft.isRecording = false; // to deactivate recording movement part
 
