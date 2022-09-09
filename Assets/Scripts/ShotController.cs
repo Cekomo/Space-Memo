@@ -133,15 +133,4 @@ public class ShotController : MonoBehaviour
 
     //    rockinTime = 0f; // reset the timer
     //}
-
-    void OnCollisionEnter2D(Collision2D col)
-    {    
-        //if (rocketClone.gameObject.tag == "Obstacle")
-        //    Destroy(rocketClone);
-
-        // if the rocket hits a rock, destroy the rocket and the object collided
-        //Destroy(collision.collider.gameObject);
-
-        //print(collision.collider.gameObject);       
-    }
 }

@@ -3648,7 +3648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceCraft: {fileID: 1914501503}
-  rocket: {fileID: 5592521371328539853, guid: c2e53a541dfa157428d9cd2b23b1a0fb, type: 3}
+  rocket: {fileID: 835047432496999409, guid: c2e53a541dfa157428d9cd2b23b1a0fb, type: 3}
   rocketClone: {fileID: 0}
   rocketButton: {fileID: 448246389}
 --- !u!1 &1951475874
