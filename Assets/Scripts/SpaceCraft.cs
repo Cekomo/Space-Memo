@@ -27,7 +27,7 @@ public class SpaceCraft : MonoBehaviour
     private Vector2 startPos; // first touch / mouse press
     //[HideInInspector] public bool isLeft; // move the spacecraft left if the variable is true
     //[HideInInspector] public bool isRight; // move the spacecraft right if the variable is true
-    //private bool isUp; // force up the spacecraft if the variable is true
+    // bool isUp; // force up the spacecraft if the variable is true
     [HideInInspector] public bool isRightLeft; // first up function must be triggered to go left/right
     private bool isRight; // to move towards rigth only during single finger touch 
     private bool isLeft; // to move towards left only during single finger touch
@@ -70,7 +70,7 @@ public class SpaceCraft : MonoBehaviour
         idleLoadTransition = false; // false means the system work on load
         toGo = true;
         preStart = false;
-        //isThruster = false; 
+        //isThruster = false;  
 
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
@@ -103,7 +103,7 @@ public class SpaceCraft : MonoBehaviour
         if (player.transform.position.y < maxValue) 
             Camera.main.transform.Translate(Vector2.up * p_RigidBody.velocity.y * Time.deltaTime);   
     }
-
+    // check speedfading variable to syncronize the slowing speed of both recording and playin session
     // it would be nice if border exceed is expressed with a reference
     void Update()
     {
@@ -130,9 +130,9 @@ public class SpaceCraft : MonoBehaviour
         // ---------------- part after recording finishes ----------------
         if (currentVelocity > 0f) // flames are active if the velocity is greater than 0 (ship is moving)
         {
-            thrusterLeft.SetActive(true);
+            //thrusterLeft.SetActive(true);
             thrusterMid.SetActive(true);
-            thrusterRight.SetActive(true);
+            //thrusterRight.SetActive(true);
         }
         else if (currentVelocity == 0f && player.transform.position.y >= -3.25f)
         {
@@ -144,9 +144,9 @@ public class SpaceCraft : MonoBehaviour
         if (player.transform.position.y < -3.5f && preStart) 
         {
             transform.Translate(Vector2.up * clock * Time.deltaTime);
-            thrusterLeft.SetActive(true);
+            //thrusterLeft.SetActive(true);
             thrusterMid.SetActive(true);
-            thrusterRight.SetActive(true);
+            //thrusterRight.SetActive(true);
         }
         else if (currentVelocity == 0f && clock > 0.01f && preStart)// stop the flame if it reaches -3.2 for beginning
         {
@@ -157,11 +157,22 @@ public class SpaceCraft : MonoBehaviour
             thrusterMid.SetActive(false);
             thrusterRight.SetActive(false);
         }
-        
+
+        if (isRight && !isLeft)
+            thrusterLeft.SetActive(true);
+        else if (isLeft && !isRight)
+            thrusterRight.SetActive(true);
+
+        if ((!isRight || !isLeft) && Input.touchCount == 0)
+        {
+            // deactivate the thrusters when there is no horizontal movement
+            thrusterLeft.SetActive(false);
+            thrusterRight.SetActive(false);
+        }
+
         // adjust clock properly
         if (clock < 0.01f) // to block the system to go inside statements above unnecessarily
             preStart = false;
-
         // ----------------------------------------------------------------
 
         // ---------------- part functioning while isRecording is true ----------------
@@ -211,13 +222,14 @@ public class SpaceCraft : MonoBehaviour
                 timer = 0;
             }
 
-            if (Mathf.Abs(player.transform.position.x) > 1.7f) // discard !isFinished by controllin
+            if (Mathf.Abs(player.transform.position.x) > 1.7f || Input.touchCount == 0) // discard !isFinished by controllin
             {
-                speedFading = p_RigidBody.velocity.x * 0.96f;
+                speedFading = p_RigidBody.velocity.x * 0.98f;
                 p_RigidBody.velocity = new Vector2(speedFading, p_RigidBody.velocity.y); // y-variable was currentVelocity
-            
+
                 //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
+                if (speedFading < 0.03f) speedFading = 0;
             }
 
             if (Mathf.Abs(player.transform.position.x) > 1.7f) // if the spacecraft exceeds the border on x-axis, turn back inside of the border
@@ -279,7 +291,7 @@ public class SpaceCraft : MonoBehaviour
 
         if (movementController.holdDownTime[j+1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished && !isRecording) // discard !isFinished by controllin
         {
-            speedFading = p_RigidBody.velocity.x * 0.96f; // speed decreases cumulatively (multiplied with 0.96  continuously)
+            speedFading = p_RigidBody.velocity.x * 0.94f; // speed decreases cumulatively (multiplied with 0.96  continuously)
             p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
             //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
             //isRight = false; isLeft = false;
@@ -338,6 +350,9 @@ public class SpaceCraft : MonoBehaviour
             //mainCamera.enabled = false;
             //finishCamera.enabled = true;
         }
+
+        if (player.transform.position.y > maxValue) // reset horizontal speed when the maxvalue is exceeded
+            p_RigidBody.velocity = new Vector2(0f, p_RigidBody.velocity.y);
 
         //if (isFinished) // GetComponent2D<Sprite>()
         //{
