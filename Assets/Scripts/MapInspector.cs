@@ -145,6 +145,8 @@ public class MapInspector : MonoBehaviour
 
     public void StartPlay() // newly record play
     {
+        moveEnd = false; // camera continues to move and does not reset its position when it is not assigned as false
+
         // deactivate inspector buttons and activate rocket to start the record
         playButton.gameObject.SetActive(false);
         mapSlider.gameObject.SetActive(false);
