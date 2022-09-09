@@ -57,7 +57,9 @@ public class SpaceCraft : MonoBehaviour
     //private float holdDownClock; // to count holding down time for each element of holdDownTime
     //private float idleClock; // to count the idle time of the system in terms of touch input
     private bool idleLoadTransition; // boolean to swap between holddown and idle operations
-    private float timer;
+    
+    private float timer; // to count time to destroy the spacecraft when collision happens
+    
     void Awake() { maxValue = 32; }
 
     // spacecraft initial condidition is y: -3.2f
@@ -72,6 +74,7 @@ public class SpaceCraft : MonoBehaviour
         preStart = false;
         //isThruster = false;  
 
+        timer = 0;
         j = 0; k = 0;
         //holdDownClock = movementController.holdDownTime[j];
         //idleClock = movementController.idleTime[j];
@@ -103,6 +106,7 @@ public class SpaceCraft : MonoBehaviour
         if (player.transform.position.y < maxValue) 
             Camera.main.transform.Translate(Vector2.up * p_RigidBody.velocity.y * Time.deltaTime);   
     }
+    // problem occurs if the vertical speed is too low 
     // check speedfading variable to syncronize the slowing speed of both recording and playin session
     // it would be nice if border exceed is expressed with a reference
     void Update()
@@ -354,15 +358,14 @@ public class SpaceCraft : MonoBehaviour
         if (player.transform.position.y > maxValue) // reset horizontal speed when the maxvalue is exceeded
             p_RigidBody.velocity = new Vector2(0f, p_RigidBody.velocity.y);
 
-        //if (isFinished) // GetComponent2D<Sprite>()
-        //{
-        //    clock += Time.deltaTime;
-        //    if (clock > 1.8f)
-        //    {
-        //        blastOff.SetActive(false);
-        //        clock = 0f;
-        //    }
-        //}
+        if (timer > 0)
+            timer += Time.deltaTime;
+
+        if (timer > 1)
+        {
+            Destroy(player); // destroy the spacecraft when animation ends
+            timer = 0;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -371,6 +374,9 @@ public class SpaceCraft : MonoBehaviour
         { // if the player hit an object, game over
             isFinished = true;
             sr.enabled = false;
+
+            timer += Time.deltaTime;
+
             p_RigidBody.bodyType = RigidbodyType2D.Static; // to stop the object and the camera to stop the view
             blastOff.SetActive(true); // set blast variable true to animate the explosion
             currentVelocity = 0; // velocity resets if the ships collides

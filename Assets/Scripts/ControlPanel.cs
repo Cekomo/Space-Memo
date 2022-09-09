@@ -50,8 +50,12 @@ public class ControlPanel : MonoBehaviour
         }
         else
         {
-            if (spaceCraft.player.transform.position.y > spaceCraft.maxValue)           
-                playBackButton.enabled = true;
+            try // try-catch is implemented because code throws error every time when ship explodes
+            {
+                if (spaceCraft.player.transform.position.y > spaceCraft.maxValue)
+                    playBackButton.enabled = true;
+            }
+            catch { }
             
         }    
     }
