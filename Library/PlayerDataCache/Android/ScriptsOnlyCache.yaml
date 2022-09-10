@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - ControlPanel
     - MapInspector
     - MovementController
+    - RocketCollision
     - ShotController
     - SpaceCraft
     Unity.2D.Animation.Editor.dll:
@@ -81,13 +82,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1718}
     - Class: 114
-      Script: {instanceID: 2350}
+      Script: {instanceID: 2312}
     - Class: 114
-      Script: {instanceID: 2650}
+      Script: {instanceID: 2352}
     - Class: 114
-      Script: {instanceID: 2818}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2924}
+      Script: {instanceID: 2820}
+    - Class: 114
+      Script: {instanceID: 2926}
     - Class: 114
       Script: {instanceID: 3058}
     - Class: 114
@@ -95,15 +98,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3420}
     - Class: 114
-      Script: {instanceID: 3718}
+      Script: {instanceID: 3716}
     - Class: 114
-      Script: {instanceID: 4182}
+      Script: {instanceID: 4176}
     - Class: 114
-      Script: {instanceID: 5136}
+      Script: {instanceID: 5128}
     - Class: 114
-      Script: {instanceID: 5240}
+      Script: {instanceID: 5232}
     - Class: 114
-      Script: {instanceID: 5478}
+      Script: {instanceID: 5468}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -225,6 +228,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner
     className: PlaymodeTestsController
+  - hash:
+      serializedVersion: 2
+      Hash: 431751262608a28c051459ab258d0371
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RocketCollision
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -395,7 +404,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: 33ca6d671f210b6ad917f526594735a4
+      Hash: d7e5fd9693fa25767fcb88fbd08f21a8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ControlPanel
@@ -587,7 +596,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: ffc4172d60476928b0297bbc68030943
+      Hash: daf448bcbdef15055438cbe9478b6010
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MapInspector
@@ -617,7 +626,7 @@ ScriptsOnlyBuild:
     className: BufferManager
   - hash:
       serializedVersion: 2
-      Hash: 1aab2d86cb943a2e507859a623fec515
+      Hash: b0be6eed2fede2c61d1e37fa0aa77818
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpaceCraft
