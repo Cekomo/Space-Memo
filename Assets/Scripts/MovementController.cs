@@ -89,22 +89,20 @@ public class MovementController : MonoBehaviour
             k++;
         }
 
-        if (Input.touchCount > 0 && spaceCraft.isRightLeft && spaceCraft.isRecording)
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && spaceCraft.isRightLeft && spaceCraft.isRecording) // idleclock gets update when the mouse clicked for 
+            if (Input.GetTouch(0).phase == TouchPhase.Began) //.. movement after ship is moved initially
             {
-                //print(k);
                 idleTime[k-1] = idleClock; // add idle time intervals to the array
                 idleClock = 0f; // reset the timer
             }
 
-        // below statements show action and idle time between actions as array
+        // below statements show action and idle time between actions as array 
+        if (!spaceCraft.isFinished)
+            for (int i = 0; i < k; i++)
+                print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
 
-        //if (!spaceCraft.isFinished)
-        //    for (int i = 0; i < k; i++)
-        //        print(i.ToString() + ": Move number: " + movementCatcher[i].ToString() + " Hold down time: " + holdDownTime[i].ToString());
-
-        //if (!spaceCraft.isFinished)
-        //    for (int i = 0; i < k - 1; i++)
-        //        print(i.ToString() + ": Idle time: " + idleTime[i]);
+        if (!spaceCraft.isFinished)
+            for (int i = 0; i < k - 1; i++)
+                print(i.ToString() + ": Idle time: " + idleTime[i]);
     }
 }

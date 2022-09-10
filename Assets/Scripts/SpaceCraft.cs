@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// in record session ship goes less in x/y-axis
+
 public class SpaceCraft : MonoBehaviour
 {
     public MovementController movementController; 
@@ -20,14 +22,10 @@ public class SpaceCraft : MonoBehaviour
     private float waitClock; // timer to wait the ship until it comes its position
 
     public Camera mainCamera; // gameobject to represent camera
-    //public Camera finishCamera; // this activates when the view needs to stop
-    //private Vector3 cameraPos; // detects position of mainCamera to transform it to finishCamera
     
     //private int pD = 100; // pixel distance to detect the swipe action
     private Vector2 startPos; // first touch / mouse press
-    //[HideInInspector] public bool isLeft; // move the spacecraft left if the variable is true
-    //[HideInInspector] public bool isRight; // move the spacecraft right if the variable is true
-    // bool isUp; // force up the spacecraft if the variable is true
+    
     [HideInInspector] public bool isRightLeft; // first up function must be triggered to go left/right
     private bool isRight; // to move towards rigth only during single finger touch 
     private bool isLeft; // to move towards left only during single finger touch
@@ -64,7 +62,6 @@ public class SpaceCraft : MonoBehaviour
 
     // spacecraft initial condidition is y: -3.2f
     // references brokes the system but the principle works as a general concept
-    // camera does not stop after the game finishes
     void Start()
     {
         isRecording = false; // initially false (until start button is triggered)
@@ -161,15 +158,20 @@ public class SpaceCraft : MonoBehaviour
             thrusterMid.SetActive(false);
             thrusterRight.SetActive(false);
         }
-
+        //print("isright: " + isRight.ToString() + " " + "isleft: " + isLeft.ToString());
         if (isRight && !isLeft)
             thrusterLeft.SetActive(true);
         else if (isLeft && !isRight)
             thrusterRight.SetActive(true);
-
-        if ((!isRight || !isLeft) && Input.touchCount == 0)
+        
+        if ((!isRight || !isLeft) && Input.touchCount == 0 && isRecording)
         {
             // deactivate the thrusters when there is no horizontal movement
+            thrusterLeft.SetActive(false);
+            thrusterRight.SetActive(false);
+        }
+        else if ((!isLeft || !isRight) && movementController.holdDownTime[j + 1] < 0.05f && !isRecording)
+        {
             thrusterLeft.SetActive(false);
             thrusterRight.SetActive(false);
         }
@@ -228,8 +230,8 @@ public class SpaceCraft : MonoBehaviour
 
             if (Mathf.Abs(player.transform.position.x) > 1.7f || Input.touchCount == 0) // discard !isFinished by controllin
             {
-                speedFading = p_RigidBody.velocity.x * 0.98f;
-                p_RigidBody.velocity = new Vector2(speedFading, p_RigidBody.velocity.y); // y-variable was currentVelocity
+                speedFading = p_RigidBody.velocity.x * 0.94f;
+                p_RigidBody.velocity = new Vector2(0, currentVelocity); // y-variable was currentVelocity
 
                 //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
                 //    isCounterMove = true; // make the counter move available if velocity is zero out of the border
@@ -293,13 +295,13 @@ public class SpaceCraft : MonoBehaviour
             //movementController.holdDownTime[j] = 0f; // this can not be implemented since it brokes balance of timing
         }
 
-        if (movementController.holdDownTime[j+1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f && !isFinished && !isRecording) // discard !isFinished by controllin
+        if ((movementController.holdDownTime[j + 1] < 0.05f || Mathf.Abs(player.transform.position.x) > 1.7f) && !isFinished && !isRecording) // discard !isFinished by controllin
         {
             speedFading = p_RigidBody.velocity.x * 0.94f; // speed decreases cumulatively (multiplied with 0.96  continuously)
-            p_RigidBody.velocity = new Vector2(speedFading, currentVelocity); // omitting time.deltatime solves background speed problem
-            //transform.Translate(Vector2.up * currentVelocity * Time.deltaTime);
-            //isRight = false; isLeft = false;
-            
+            p_RigidBody.velocity = new Vector2(0, p_RigidBody.velocity.y); // omitting time.deltatime solves background speed problem                                                                             
+
+            if (speedFading < 0.03f) speedFading = 0;
+
             //if (p_RigidBody.velocity.x < 0.001f) // slightly more than zero since the velocity never be zero (always infinitely small greater)
             //isCounterMove = true; // make the counter move available if velocity is zero out of the border
         }
@@ -315,8 +317,12 @@ public class SpaceCraft : MonoBehaviour
             idleLoadTransition = true;
         }
 
-        if (idleLoadTransition && !isFinished) // wait until idle time in queue is over
-            movementController.idleTime[k+1] -= Time.deltaTime;
+        try
+        {
+            if (idleLoadTransition && !isFinished) // wait until idle time in queue is over
+                movementController.idleTime[k + 1] -= Time.deltaTime;
+        }
+        catch { }
 
         try // this function gives error when idle time finishes
         {
