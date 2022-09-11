@@ -16,7 +16,9 @@ public class SpaceCraft : MonoBehaviour
     private GameObject thrusterMid; // it represents middle thruster flame
     private GameObject thrusterRight; // it represents right thruster flame
     [HideInInspector] public GameObject[] obstacles; // represents all obstacles in the map
-    
+    [HideInInspector] public GameObject[] b_obstacles; // // represents all breakable obstacles in the map
+
+
     private GameObject blastOff; // it represents the blast after spacecraft collision
     [HideInInspector] public float clock; // timer to deactivate explosion effect
     private float waitClock; // timer to wait the ship until it comes its position
@@ -85,7 +87,8 @@ public class SpaceCraft : MonoBehaviour
         isCounterMove = false; // it blocks the horizontal movement ability when the borders (x-axis) are excededed
 
         // determine the obstacles
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");        
+        b_obstacles = GameObject.FindGameObjectsWithTag("B_Obstacle");        
 
         p_RigidBody = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -376,7 +379,7 @@ public class SpaceCraft : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     { // when collision happens, the camera sometimes go out the borders of the background
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "B_Obstacle")
         { // if the player hit an object, game over
             isFinished = true;
             sr.enabled = false;

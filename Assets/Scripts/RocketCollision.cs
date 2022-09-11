@@ -40,6 +40,9 @@ public class RocketCollision : MonoBehaviour
         blastOff.SetActive(true);
         sr.enabled = false; 
         Destroy(flame);
+
+        if (col.gameObject.tag == "B_Obstacle")
+            Destroy(col.gameObject);
         
     }
 }

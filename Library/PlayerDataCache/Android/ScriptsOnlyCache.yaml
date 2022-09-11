@@ -626,7 +626,7 @@ ScriptsOnlyBuild:
     className: BufferManager
   - hash:
       serializedVersion: 2
-      Hash: b0be6eed2fede2c61d1e37fa0aa77818
+      Hash: 95267d1899b430c9e78c18ec06c85c3a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpaceCraft

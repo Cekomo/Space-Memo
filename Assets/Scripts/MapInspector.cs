@@ -165,9 +165,13 @@ public class MapInspector : MonoBehaviour
         // adjust the variable as true to bring the spacecraft inside screen and omit the obstacles
         spaceCraft.preStart = true;
 
-        for (int i = 0; i < spaceCraft.obstacles.Length; i++)
+        for (int i = 0; i < spaceCraft.obstacles.Length; i++) // non-breakable obstacles
         {
             spaceCraft.obstacles[i].SetActive(false);
+        }
+        for (int i = 0; i < spaceCraft.b_obstacles.Length; i++)
+        {
+            spaceCraft.b_obstacles[i].SetActive(false);
         }
 
         spaceCraft.isRecording = true; // record the actions when start button is triggered

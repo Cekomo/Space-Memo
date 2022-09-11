@@ -82,6 +82,11 @@ public class ControlPanel : MonoBehaviour
         {
             spaceCraft.obstacles[i].SetActive(true);
         }
+        for (int i = 0; i < spaceCraft.b_obstacles.Length; i++)
+        {
+            spaceCraft.b_obstacles[i].SetActive(true);
+        }
+
 
         spaceCraft.isFinished = false; // activate auto play 
         spaceCraft.isRecording = false; // to deactivate recording movement part
